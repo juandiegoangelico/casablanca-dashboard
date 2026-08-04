@@ -3,90 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Financeiro - Condomínio Casablanca Campeche</title>
-    <!-- Tailwind CSS -->
+    <title>Dashboard Financeiro — Condomínio Casablanca Campeche</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js -->
+    <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: 'Inter', system-ui, sans-serif; background-color: #0f172a; color: #f8fafc; }
-        .card { background-color: #1e293b; border: 1px solid #334155; }
-        .tab-btn.active { background-color: #059669; color: #ffffff; border-color: #10b981; font-weight: 600; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+        .card {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+        }
+        .tab-btn {
+            transition: all 0.2s ease-in-out;
+        }
+        .tab-btn.active {
+            background-color: #059669;
+            color: #ffffff;
+            border-color: #10b981;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        /* Custom scrollbars */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
     </style>
 </head>
-<body class="p-3 md:p-6 min-h-screen">
+<body class="p-3 sm:p-5 md:p-8 min-h-screen">
 
-    <!-- Header -->
-    <header class="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-700 pb-5 gap-4">
+    <header class="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-800 pb-5 gap-4">
         <div>
-            <div class="flex items-center gap-2">
-                <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/80 px-3 py-1 rounded-full border border-emerald-800">Conselho Fiscal</span>
-                <span class="text-xs text-slate-400">Prestação de Contas Completa</span>
+            <div class="flex items-center gap-2 flex-wrap">
+                <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/80 px-3 py-1 rounded-full border border-emerald-800/80 shadow-sm">
+                    <i class="fas fa-shield-alt mr-1"></i> Conselho Fiscal
+                </span>
+                <span class="text-xs text-slate-400 bg-slate-800/80 px-3 py-1 rounded-full border border-slate-700">
+                    Histórico Completo (2015 — 2026)
+                </span>
             </div>
-            <h1 class="text-2xl md:text-3xl font-extrabold mt-2 text-white">CONDOMÍNIO EDIFÍCIO RESIDENCIAL CASABLANCA</h1>
-            <p class="text-slate-400 text-sm mt-1">Praia do Campeche — Florianópolis/SC | Painel do Conselheiro Fiscal</p>
+            <h1 class="text-2xl sm:text-3xl font-extrabold mt-2 text-white tracking-tight">
+                CONDOMÍNIO EDIFÍCIO RESIDENCIAL CASABLANCA
+            </h1>
+            <p class="text-slate-400 text-sm mt-1 flex items-center gap-2">
+                <i class="fas fa-location-dot text-emerald-400"></i> Praia do Campeche — Florianópolis/SC | Painel de Auditoria e Prestação de Contas
+            </p>
         </div>
-        <div class="flex items-center gap-3">
-            <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-medium px-4 py-2 rounded-lg border border-slate-600 transition flex items-center gap-2">
-                <i class="fas fa-print"></i> Imprimir / PDF
+        
+        <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
+            <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-medium px-3 sm:px-4 py-2 rounded-lg border border-slate-700 transition flex items-center gap-2">
+                <i class="fas fa-print"></i> PDF / Imprimir
             </button>
-            <a href="https://docs.google.com/spreadsheets/d/1A25V1E5yVs8ePVvGW8zb25oSS3M8ef65ZAJU-8wpUJk/edit?gid=1395213704#gid=1395213704" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium px-4 py-2 rounded-lg transition flex items-center gap-2 shadow-lg shadow-emerald-900/30">
-                <i class="fas fa-external-link-alt"></i> Planilha Google Original
+            <a href="https://docs.google.com/spreadsheets/d/1A25V1E5yVs8ePVvGW8zb25oSS3M8ef65ZAJU-8wpUJk/edit?gid=1395213704#gid=1395213704" target="_blank" rel="noopener noreferrer" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs sm:text-sm font-medium px-3 sm:px-4 py-2 rounded-lg transition flex items-center gap-2 shadow-lg shadow-emerald-900/30">
+                <i class="fas fa-table"></i> Planilha Google Original
+            </a>
+            <a href="https://drive.google.com/drive/u/1/folders/1kLPlg8nVzIyuRGMOLlgc2c5W9RGXT_ia" target="_blank" rel="noopener noreferrer" class="bg-sky-600 hover:bg-sky-500 text-white text-xs sm:text-sm font-medium px-3 sm:px-4 py-2 rounded-lg transition flex items-center gap-2 shadow-lg shadow-sky-900/30">
+                <i class="fab fa-google-drive"></i> Pasta PDFs
             </a>
         </div>
     </header>
 
-    <!-- Navigation Tabs (8 Abas) -->
-    <nav class="flex flex-wrap gap-2 mb-6 border-b border-slate-800 pb-3">
-        <button onclick="switchTab('tab-dashboard')" id="btn-tab-dashboard" class="tab-btn active text-xs md:text-sm px-4 py-2.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 transition flex items-center gap-2">
-            <i class="fas fa-chart-pie text-emerald-400"></i> Dashboard Geral
+    <nav class="flex flex-wrap gap-2 mb-6 border-b border-slate-800 pb-3 overflow-x-auto">
+        <button onclick="switchTab('tab-dashboard')" id="btn-tab-dashboard" class="tab-btn active text-xs sm:text-sm px-3.5 py-2.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 flex items-center gap-2">
+            <i class="fas fa-chart-pie text-emerald-400"></i> 📊 Dashboard Geral
         </button>
-        <button onclick="switchTab('tab-resumo-mensal')" id="btn-tab-resumo-mensal" class="tab-btn text-xs md:text-sm px-4 py-2.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 transition flex items-center gap-2">
+        <button onclick="switchTab('tab-resumo-mensal')" id="btn-tab-resumo-mensal" class="tab-btn text-xs sm:text-sm px-3.5 py-2.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 flex items-center gap-2">
             <i class="fas fa-calendar-alt text-sky-400"></i> Resumo Mensal
         </button>
-        <button onclick="switchTab('tab-lancamentos')" id="btn-tab-lancamentos" class="tab-btn text-xs md:text-sm px-4 py-2.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 transition flex items-center gap-2">
-            <i class="fas fa-database text-amber-400"></i> Lançamentos Detalhados
+        <button onclick="switchTab('tab-lancamentos')" id="btn-tab-lancamentos" class="tab-btn text-xs sm:text-sm px-3.5 py-2.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 flex items-center gap-2">
+            <i class="fas fa-list-check text-amber-400"></i> Lançamentos Detalhados
         </button>
-        <button onclick="switchTab('tab-meses-faltantes')" id="btn-tab-meses-faltantes" class="tab-btn text-xs md:text-sm px-4 py-2.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 transition flex items-center gap-2">
+        <button onclick="switchTab('tab-meses-faltantes')" id="btn-tab-meses-faltantes" class="tab-btn text-xs sm:text-sm px-3.5 py-2.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 flex items-center gap-2">
             <i class="fas fa-exclamation-triangle text-rose-400"></i> Meses Faltantes
         </button>
-        <button onclick="switchTab('tab-meses-computados')" id="btn-tab-meses-computados" class="tab-btn text-xs md:text-sm px-4 py-2.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 transition flex items-center gap-2">
+        <button onclick="switchTab('tab-meses-computados')" id="btn-tab-meses-computados" class="tab-btn text-xs sm:text-sm px-3.5 py-2.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 flex items-center gap-2">
             <i class="fas fa-check-circle text-emerald-400"></i> Meses Computados
         </button>
-        <button onclick="switchTab('tab-cat-saldo-ant')" id="btn-tab-cat-saldo-ant" class="tab-btn text-xs md:text-sm px-4 py-2.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 transition flex items-center gap-2">
-            <i class="fas fa-history text-indigo-400"></i> Cat - Saldo Anterior
+        <button onclick="switchTab('tab-cat-saldo-ant')" id="btn-tab-cat-saldo-ant" class="tab-btn text-xs sm:text-sm px-3.5 py-2.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 flex items-center gap-2">
+            <i class="fas fa-history text-indigo-400"></i> Cat — Saldo Anterior
         </button>
-        <button onclick="switchTab('tab-cat-receitas')" id="btn-tab-cat-receitas" class="tab-btn text-xs md:text-sm px-4 py-2.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 transition flex items-center gap-2">
-            <i class="fas fa-arrow-down-left text-emerald-400"></i> Cat - Receitas
+        <button onclick="switchTab('tab-cat-receitas')" id="btn-tab-cat-receitas" class="tab-btn text-xs sm:text-sm px-3.5 py-2.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 flex items-center gap-2">
+            <i class="fas fa-arrow-down-left text-emerald-400"></i> Cat — Receitas
         </button>
-        <button onclick="switchTab('tab-cat-despesas')" id="btn-tab-cat-despesas" class="tab-btn text-xs md:text-sm px-4 py-2.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 transition flex items-center gap-2">
-            <i class="fas fa-arrow-up-right text-rose-400"></i> Cat - Despesas
+        <button onclick="switchTab('tab-cat-despesas')" id="btn-tab-cat-despesas" class="tab-btn text-xs sm:text-sm px-3.5 py-2.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 flex items-center gap-2">
+            <i class="fas fa-arrow-up-right text-rose-400"></i> Cat — Despesas
         </button>
-        <button onclick="switchTab('tab-cat-saldo-atual')" id="btn-tab-cat-saldo-atual" class="tab-btn text-xs md:text-sm px-4 py-2.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 transition flex items-center gap-2">
-            <i class="fas fa-wallet text-cyan-400"></i> Cat - Saldo Atual
+        <button onclick="switchTab('tab-cat-saldo-atual')" id="btn-tab-cat-saldo-atual" class="tab-btn text-xs sm:text-sm px-3.5 py-2.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 flex items-center gap-2">
+            <i class="fas fa-wallet text-cyan-400"></i> Cat — Saldo Atual
         </button>
     </nav>
 
-    <!-- TAB 1: DASHBOARD GERAL -->
     <div id="tab-dashboard" class="tab-content active space-y-6">
-        <!-- Global Filters -->
+        
+        <!-- Filter Bar -->
         <div class="card p-5 rounded-xl shadow-xl">
-            <div class="flex items-center gap-2 mb-4 text-slate-300 font-semibold text-sm">
-                <i class="fas fa-filter text-emerald-400"></i> Filtros do Dashboard
+            <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+                <div class="flex items-center gap-2 text-slate-200 font-semibold text-sm">
+                    <i class="fas fa-filter text-emerald-400"></i> Filtros do Dashboard
+                </div>
+                <span class="text-xs text-slate-400">Selecione o período para recalcular os gráficos e totais</span>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                 <div>
                     <label class="block text-xs font-medium text-slate-400 mb-1">Ano de Exercício</label>
                     <select id="dashFilterAno" onchange="updateDashboard()" class="w-full bg-slate-900 border border-slate-700 text-slate-200 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
-                        <option value="TODOS">Todos os Anos (Histórico Completo)</option>
-                        <option value="2015">2015</option>
-                        <option value="2016" selected>2016</option>
-                        <option value="2017">2017</option>
+                        <option value="TODOS" selected>Todos os Anos (Histórico Completo)</option>
+                        <option value="2026">2026</option>
+                        <option value="2025">2025</option>
+                        <option value="2024">2024</option>
+                        <option value="2023">2023</option>
+                        <option value="2022">2022</option>
+                        <option value="2021">2021</option>
+                        <option value="2020">2020</option>
+                        <option value="2019">2019</option>
                         <option value="2018">2018</option>
+                        <option value="2017">2017</option>
+                        <option value="2016">2016</option>
+                        <option value="2015">2015</option>
                     </select>
                 </div>
                 <div>
@@ -107,43 +168,64 @@
                         <option value="12">12 - Dezembro</option>
                     </select>
                 </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-400 mb-1">Visão Geral</label>
+                    <select id="dashFilterTipo" onchange="updateDashboard()" class="w-full bg-slate-900 border border-slate-700 text-slate-200 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                        <option value="TODOS">Receitas & Despesas</option>
+                        <option value="RECEITAS">Apenas Receitas</option>
+                        <option value="DESPESAS">Apenas Despesas</option>
+                    </select>
+                </div>
                 <div class="flex items-end">
-                    <button onclick="resetFilters()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium py-2.5 rounded-lg border border-slate-700 text-sm transition">
-                        <i class="fas fa-undo mr-1"></i> Redefinir Filtros
+                    <button onclick="resetDashboardFilters()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium py-2.5 rounded-lg border border-slate-700 text-sm transition flex items-center justify-center gap-2">
+                        <i class="fas fa-undo"></i> Redefinir Filtros
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- KPI Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div class="card p-5 rounded-xl border-l-4 border-l-emerald-500 shadow-lg">
-                <div class="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-1">Total Receitas</div>
-                <div id="kpiRec" class="text-2xl font-bold text-emerald-400">R$ 0,00</div>
-                <span class="text-xs text-slate-500 mt-1 block">Taxa condominial, fundo e receitas</span>
+                <div class="flex justify-between items-start text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2">
+                    <span>Total de Receitas</span>
+                    <i class="fas fa-arrow-down text-emerald-400 text-base"></i>
+                </div>
+                <div id="kpiRec" class="text-2xl font-bold text-emerald-400 font-mono">R$ 0,00</div>
+                <span class="text-xs text-slate-500 mt-1 block">Condomínio, garagens, gás e fundo</span>
             </div>
+
             <div class="card p-5 rounded-xl border-l-4 border-l-rose-500 shadow-lg">
-                <div class="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-1">Total Despesas</div>
-                <div id="kpiDesp" class="text-2xl font-bold text-rose-400">R$ 0,00</div>
-                <span class="text-xs text-slate-500 mt-1 block">Serviços, energia, elevadores, taxas</span>
+                <div class="flex justify-between items-start text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2">
+                    <span>Total de Despesas</span>
+                    <i class="fas fa-arrow-up text-rose-400 text-base"></i>
+                </div>
+                <div id="kpiDesp" class="text-2xl font-bold text-rose-400 font-mono">R$ 0,00</div>
+                <span class="text-xs text-slate-500 mt-1 block">Manutenção, serviços, honorários</span>
             </div>
+
             <div class="card p-5 rounded-xl border-l-4 border-l-sky-500 shadow-lg">
-                <div class="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-1">Resultado Líquido</div>
-                <div id="kpiSaldo" class="text-2xl font-bold text-white">R$ 0,00</div>
-                <span class="text-xs text-slate-500 mt-1 block">Superávit / Déficit do período</span>
+                <div class="flex justify-between items-start text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2">
+                    <span>Resultado Líquido</span>
+                    <i class="fas fa-scale-balanced text-sky-400 text-base"></i>
+                </div>
+                <div id="kpiSaldo" class="text-2xl font-bold text-white font-mono">R$ 0,00</div>
+                <span class="text-xs text-slate-500 mt-1 block">Superávit / Déficit operacional</span>
             </div>
+
             <div class="card p-5 rounded-xl border-l-4 border-l-amber-500 shadow-lg">
-                <div class="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-1">Comprometimento</div>
-                <div id="kpiRatio" class="text-2xl font-bold text-amber-400">0.0%</div>
-                <span class="text-xs text-slate-500 mt-1 block">Despesas sobre Receitas Totais</span>
+                <div class="flex justify-between items-start text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2">
+                    <span>Comprometimento</span>
+                    <i class="fas fa-percent text-amber-400 text-base"></i>
+                </div>
+                <div id="kpiRatio" class="text-2xl font-bold text-amber-400 font-mono">0.0%</div>
+                <span class="text-xs text-slate-500 mt-1 block">Proporção Despesas / Receitas</span>
             </div>
         </div>
 
-        <!-- Charts -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div class="card p-5 rounded-xl shadow-xl">
                 <h3 class="text-base font-bold text-slate-200 mb-4 flex items-center gap-2">
-                    <i class="fas fa-chart-column text-emerald-400"></i> Evolução das Receitas vs. Despesas
+                    <i class="fas fa-chart-column text-emerald-400"></i> Evolução Temporal: Receitas vs. Despesas
                 </h3>
                 <div class="relative h-72">
                     <canvas id="chartEvolucao"></canvas>
@@ -151,7 +233,7 @@
             </div>
             <div class="card p-5 rounded-xl shadow-xl">
                 <h3 class="text-base font-bold text-slate-200 mb-4 flex items-center gap-2">
-                    <i class="fas fa-pie-chart text-amber-400"></i> Composição das Despesas por Conta
+                    <i class="fas fa-pie-chart text-amber-400"></i> Distribuição Orçamentária por Categoria
                 </h3>
                 <div class="relative h-72">
                     <canvas id="chartDespesas"></canvas>
@@ -160,36 +242,47 @@
         </div>
     </div>
 
-    <!-- TAB 2: RESUMO MENSAL -->
     <div id="tab-resumo-mensal" class="tab-content card rounded-xl p-5 shadow-xl">
-        <h3 class="text-lg font-bold text-slate-200 mb-4 flex items-center gap-2">
-            <i class="fas fa-calendar-alt text-sky-400"></i> Aba Original: Resumo Mensal dos Demonstrativos
-        </h3>
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
+            <div>
+                <h3 class="text-lg font-bold text-slate-200 flex items-center gap-2">
+                    <i class="fas fa-calendar-alt text-sky-400"></i> Resumo Mensal dos Demonstrativos Processados
+                </h3>
+                <p class="text-slate-400 text-xs mt-0.5">Visão condensada de cada arquivo PDF de prestação de contas mensal</p>
+            </div>
+            <input type="text" id="searchResumo" onkeyup="filterResumoTable()" placeholder="Buscar competência ou PDF..." class="bg-slate-900 border border-slate-700 text-slate-200 px-3 py-1.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-sky-500 w-full sm:w-64">
+        </div>
         <div class="overflow-x-auto">
             <table class="w-full text-left text-sm text-slate-300">
                 <thead class="bg-slate-900 text-xs uppercase font-semibold text-slate-400 border-b border-slate-700">
                     <tr>
                         <th class="p-3">Competência</th>
-                        <th class="p-3">Arquivo Demonstrativo (PDF)</th>
+                        <th class="p-3">Arquivo Fonte PDF</th>
                         <th class="p-3">Período de Apuração</th>
-                        <th class="p-3 text-right">Saldo Anterior (R$)</th>
-                        <th class="p-3 text-right">Total Receitas (R$)</th>
-                        <th class="p-3 text-right">Total Despesas (R$)</th>
-                        <th class="p-3 text-right">Saldo Atual (R$)</th>
+                        <th class="p-3 text-right">Saldo Anterior</th>
+                        <th class="p-3 text-right">Total Receitas</th>
+                        <th class="p-3 text-right">Total Despesas</th>
+                        <th class="p-3 text-right">Saldo Atual</th>
                     </tr>
                 </thead>
-                <tbody id="tableResumoMensal" class="divide-y divide-slate-800"></tbody>
+                <tbody id="tableResumoMensal" class="divide-y divide-slate-800">
+                    <!-- Populated via JS -->
+                </tbody>
             </table>
         </div>
     </div>
 
-    <!-- TAB 3: LANÇAMENTOS DETALHADOS -->
     <div id="tab-lancamentos" class="tab-content card rounded-xl p-5 shadow-xl">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
-            <h3 class="text-lg font-bold text-slate-200 flex items-center gap-2">
-                <i class="fas fa-database text-amber-400"></i> Aba Original: Lançamentos Detalhados (Base Completa)
-            </h3>
-            <input type="text" id="searchLanc" onkeyup="filterLancamentos()" placeholder="Pesquisar conta ou valor..." class="bg-slate-900 border border-slate-700 text-slate-200 px-3 py-1.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-amber-500">
+            <div>
+                <h3 class="text-lg font-bold text-slate-200 flex items-center gap-2">
+                    <i class="fas fa-list-check text-amber-400"></i> Base Completa de Lançamentos Detalhados
+                </h3>
+                <p class="text-slate-400 text-xs mt-0.5">Filtre por qualquer termo, fornecedor, serviço ou valor</p>
+            </div>
+            <div class="flex items-center gap-2 w-full sm:w-auto">
+                <input type="text" id="searchLanc" onkeyup="filterLancamentosTable()" placeholder="Pesquisar conta, taxa, serviço..." class="bg-slate-900 border border-slate-700 text-slate-200 px-3 py-1.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-amber-500 w-full sm:w-72">
+            </div>
         </div>
         <div class="overflow-x-auto">
             <table class="w-full text-left text-sm text-slate-300">
@@ -198,43 +291,46 @@
                         <th class="p-3">Competência</th>
                         <th class="p-3">Categoria Geral</th>
                         <th class="p-3">Subcategoria / Conta Detalhada</th>
-                        <th class="p-3 text-right">Valor Registrado (R$)</th>
+                        <th class="p-3 text-right">Valor Registrado</th>
                     </tr>
                 </thead>
-                <tbody id="tableLancamentos" class="divide-y divide-slate-800"></tbody>
+                <tbody id="tableLancamentos" class="divide-y divide-slate-800">
+                    <!-- Populated via JS -->
+                </tbody>
             </table>
         </div>
     </div>
 
-    <!-- TAB 4: MESES FALTANTES -->
     <div id="tab-meses-faltantes" class="tab-content card rounded-xl p-5 shadow-xl">
         <h3 class="text-lg font-bold text-slate-200 mb-2 flex items-center gap-2">
-            <i class="fas fa-exclamation-triangle text-rose-400"></i> Aba Criada: Meses Faltantes (Pendentes de Envio)
+            <i class="fas fa-exclamation-triangle text-rose-400"></i> Meses Faltantes (Sem Lançamentos Processados)
         </h3>
-        <p class="text-slate-400 text-sm mb-4">Competências históricas que ainda não possuem lançamentos cadastrados na planilha:</p>
-        <div id="gridFaltantes" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3"></div>
+        <p class="text-slate-400 text-sm mb-4">Competências da linha do tempo (2015 — 2026) ainda não digitalizadas ou ausentes no acervo:</p>
+        <div id="gridFaltantes" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
+            <!-- Populated via JS -->
+        </div>
     </div>
 
-    <!-- TAB 5: MESES COMPUTADOS -->
     <div id="tab-meses-computados" class="tab-content card rounded-xl p-5 shadow-xl">
         <h3 class="text-lg font-bold text-slate-200 mb-2 flex items-center gap-2">
-            <i class="fas fa-check-circle text-emerald-400"></i> Aba Criada: Meses Computados na Base
+            <i class="fas fa-check-circle text-emerald-400"></i> Meses Computados e Processados
         </h3>
-        <p class="text-slate-400 text-sm mb-4">Lista de todos os meses cujos demonstrativos foram devidamente processados:</p>
-        <div id="gridComputados" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3"></div>
+        <p class="text-slate-400 text-sm mb-4">Competências cujos balancetes e demonstrativos foram compilados na base de dados:</p>
+        <div id="gridComputados" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
+            <!-- Populated via JS -->
+        </div>
     </div>
 
-    <!-- TAB 6: CAT - SALDO ANTERIOR -->
     <div id="tab-cat-saldo-ant" class="tab-content card rounded-xl p-5 shadow-xl">
         <h3 class="text-lg font-bold text-slate-200 mb-4 flex items-center gap-2">
-            <i class="fas fa-history text-indigo-400"></i> Tabela Dinâmica: Cat - SALDO ANTERIOR
+            <i class="fas fa-history text-indigo-400"></i> Tabela Dinâmica: Cat — SALDO ANTERIOR
         </h3>
         <div class="overflow-x-auto">
             <table class="w-full text-left text-sm text-slate-300">
                 <thead class="bg-slate-900 text-xs uppercase font-semibold text-slate-400 border-b border-slate-700">
                     <tr>
                         <th class="p-3">Conta / Subcategoria</th>
-                        <th class="p-3 text-right">Total Acumulado (R$)</th>
+                        <th class="p-3 text-right">Total Acumulado</th>
                     </tr>
                 </thead>
                 <tbody id="tableSaldoAnt" class="divide-y divide-slate-800"></tbody>
@@ -242,17 +338,16 @@
         </div>
     </div>
 
-    <!-- TAB 7: CAT - RECEITAS -->
     <div id="tab-cat-receitas" class="tab-content card rounded-xl p-5 shadow-xl">
         <h3 class="text-lg font-bold text-slate-200 mb-4 flex items-center gap-2">
-            <i class="fas fa-arrow-down-left text-emerald-400"></i> Tabela Dinâmica: Cat - RECEITAS
+            <i class="fas fa-arrow-down-left text-emerald-400"></i> Tabela Dinâmica: Cat — RECEITAS
         </h3>
         <div class="overflow-x-auto">
             <table class="w-full text-left text-sm text-slate-300">
                 <thead class="bg-slate-900 text-xs uppercase font-semibold text-slate-400 border-b border-slate-700">
                     <tr>
-                        <th class="p-3">Conta de Receita</th>
-                        <th class="p-3 text-right">Total Arrecadado (R$)</th>
+                        <th class="p-3">Conta / Fonte de Receita</th>
+                        <th class="p-3 text-right">Total Arrecadado</th>
                     </tr>
                 </thead>
                 <tbody id="tableCatReceitas" class="divide-y divide-slate-800"></tbody>
@@ -260,17 +355,16 @@
         </div>
     </div>
 
-    <!-- TAB 8: CAT - DESPESAS -->
     <div id="tab-cat-despesas" class="tab-content card rounded-xl p-5 shadow-xl">
         <h3 class="text-lg font-bold text-slate-200 mb-4 flex items-center gap-2">
-            <i class="fas fa-arrow-up-right text-rose-400"></i> Tabela Dinâmica: Cat - DESPESAS
+            <i class="fas fa-arrow-up-right text-rose-400"></i> Tabela Dinâmica: Cat — DESPESAS
         </h3>
         <div class="overflow-x-auto">
             <table class="w-full text-left text-sm text-slate-300">
                 <thead class="bg-slate-900 text-xs uppercase font-semibold text-slate-400 border-b border-slate-700">
                     <tr>
-                        <th class="p-3">Conta de Despesa</th>
-                        <th class="p-3 text-right">Total Executado (R$)</th>
+                        <th class="p-3">Conta / Tipo de Despesa</th>
+                        <th class="p-3 text-right">Total Executado</th>
                     </tr>
                 </thead>
                 <tbody id="tableCatDespesas" class="divide-y divide-slate-800"></tbody>
@@ -278,17 +372,16 @@
         </div>
     </div>
 
-    <!-- TAB 9: CAT - SALDO ATUAL -->
     <div id="tab-cat-saldo-atual" class="tab-content card rounded-xl p-5 shadow-xl">
         <h3 class="text-lg font-bold text-slate-200 mb-4 flex items-center gap-2">
-            <i class="fas fa-wallet text-cyan-400"></i> Tabela Dinâmica: Cat - SALDO ATUAL
+            <i class="fas fa-wallet text-cyan-400"></i> Tabela Dinâmica: Cat — SALDO ATUAL
         </h3>
         <div class="overflow-x-auto">
             <table class="w-full text-left text-sm text-slate-300">
                 <thead class="bg-slate-900 text-xs uppercase font-semibold text-slate-400 border-b border-slate-700">
                     <tr>
-                        <th class="p-3">Conta / Banco</th>
-                        <th class="p-3 text-right">Total Saldo Atual (R$)</th>
+                        <th class="p-3">Conta / Aplicação / Banco</th>
+                        <th class="p-3 text-right">Saldo Atual Registrado</th>
                     </tr>
                 </thead>
                 <tbody id="tableSaldoAtual" class="divide-y divide-slate-800"></tbody>
@@ -296,50 +389,169 @@
         </div>
     </div>
 
-    <!-- JavaScript Execution Engine -->
-    <script>
-        // Real database extracted from Google Sheets
-        const resumoMensalData = [{"arq": "C0153_Demonstrativomensal_122016.pdf", "comp": "12/2016", "per": "Periodo de 01/12/2016 até 31/12/2016", "sant": 5231.84, "rec": 8057.94, "desp": 4972.74, "satual": 8287.04}, {"arq": "C0153_Demonstrativomensal_012016.pdf", "comp": "01/2016", "per": "Periodo de 01/01/2016 até 31/01/2016", "sant": 17035.65, "rec": 7213.14, "desp": 7523.2, "satual": 10752.2}, {"arq": "C0153_Demonstrativomensal_122015.pdf", "comp": "12/2015", "per": "Periodo de 01/12/2015 até 31/12/2015", "sant": 30022.7, "rec": 8212.68, "desp": 17035.65, "satual": 21199.73}, {"arq": "C0153_Demonstrativomensal_062015.pdf", "comp": "06/2015", "per": "Periodo de 01/06/2015 até 30/06/2015", "sant": 23378.29, "rec": 10223.7, "desp": 11488.41, "satual": 14613.62}, {"arq": "C0153_Demonstrativomensal_082015.pdf", "comp": "08/2015", "per": "Periodo de 01/08/2015 até 31/08/2015", "sant": 21959.59, "rec": 10621.09, "desp": 5589.46, "satual": 8328.56}, {"arq": "C0153_Demonstrativomensal_092015.pdf", "comp": "09/2015", "per": "Periodo de 01/09/2015 até 30/09/2015", "sant": 24252.12, "rec": 10061.65, "desp": 148.02, "satual": 6501.57}, {"arq": "C0153_Demonstrativomensal_102015.pdf", "comp": "10/2015", "per": "Periodo de 01/10/2015 até 31/10/2015", "sant": 27812.2, "rec": 8857.21, "desp": 5482.94, "satual": 8512.4}, {"arq": "C0153_Demonstrativomensal_112015.pdf", "comp": "11/2015", "per": "Periodo de 01/11/2015 até 30/11/2015", "sant": 28157.01, "rec": 9095.36, "desp": 4138.51, "satual": 7229.67}, {"arq": "C0153_Demonstrativomensal_082017.pdf", "comp": "08/2017", "per": "Periodo de 01/08/2017 até 31/08/2017", "sant": 1831.08, "rec": 9712.92, "desp": 1902.58, "satual": 9641.42}, {"arq": "C0153_Demonstrativomensal_072017.pdf", "comp": "07/2017", "per": "Periodo de 01/07/2017 até 31/07/2017", "sant": 3459.74, "rec": 9983.11, "desp": 3569.3, "satual": 9983.11}, {"arq": "C0153_Demonstrativomensal_062017.pdf", "comp": "06/2017", "per": "Periodo de 01/06/2017 até 30/06/2017", "sant": 3569.3, "rec": 9461.38, "desp": 1838.68, "satual": 9461.38}, {"arq": "C0153_Demonstrativomensal_052017.pdf", "comp": "05/2017", "per": "Periodo de 01/05/2017 até 31/05/2017", "sant": 1838.68, "rec": 8895.23, "desp": 3378.08, "satual": 8895.23}, {"arq": "C0153_Demonstrativomensal_042017.pdf", "comp": "04/2017", "per": "Periodo de 01/04/2017 até 30/04/2017", "sant": 3378.08, "rec": 10111.84, "desp": 2690.77, "satual": 10111.84}, {"arq": "C0153_Demonstrativomensal_032017.pdf", "comp": "03/2017", "per": "Periodo de 01/03/2017 até 31/03/2017", "sant": 2690.77, "rec": 9189.54, "desp": 761.96, "satual": 9189.54}, {"arq": "C0153_Demonstrativomensal_022017.pdf", "comp": "02/2017", "per": "Periodo de 01/02/2017 até 28/02/2017", "sant": 761.96, "rec": 8302.83, "desp": 5002.74, "satual": 8302.83}, {"arq": "C0153_Demonstrativomensal_012017.pdf", "comp": "01/2017", "per": "Periodo de 01/01/2017 até 31/01/2017", "sant": 5002.74, "rec": 12511.9, "desp": 17282.76, "satual": 12511.9}, {"arq": "C0153_Demonstrativomensal_122018.pdf", "comp": "12/2018", "per": "Periodo de 01/12/2018 até 31/12/2018", "sant": 17282.76, "rec": 24326.37, "desp": 36390.39, "satual": 24326.37}, {"arq": "C0153_Demonstrativomensal_112018.pdf", "comp": "11/2018", "per": "Periodo de 01/11/2018 até 30/11/2018", "sant": 36390.39, "rec": 33981.27, "desp": 25379.61, "satual": 33981.27}, {"arq": "C0153_Demonstrativomensal_102018.pdf", "comp": "10/2018", "per": "Periodo de 01/10/2018 até 31/10/2018", "sant": 25379.61, "rec": 11534.41, "desp": 16662.12, "satual": 11534.41}, {"arq": "C0153_Demonstrativomensal_092018.pdf", "comp": "09/2018", "per": "Periodo de 01/09/2018 até 30/09/2018", "sant": 16662.12, "rec": 9277.06, "desp": 8551.25, "satual": 9277.06}, {"arq": "C0153_Demonstrativomensal_082018.pdf", "comp": "08/2018", "per": "Periodo de 01/08/2018 até 31/08/2018", "sant": 8551.25, "rec": 8779.65, "desp": 6356.64, "satual": 8779.65}, {"arq": "C0153_Demonstrativomensal_072018.pdf", "comp": "07/2018", "per": "Periodo de 01/07/2018 até 31/07/2018", "sant": 6356.64, "rec": 10888.13, "desp": 8086.91, "satual": 10888.13}, {"arq": "C0153_Demonstrativomensal_062018.pdf", "comp": "06/2018", "per": "Periodo de 01/06/2018 até 30/06/2018", "sant": 8086.91, "rec": 9486.37, "desp": 8315.16, "satual": 9486.37}, {"arq": "C0153_Demonstrativomensal_052018.pdf", "comp": "05/2018", "per": "Periodo de 01/05/2018 até 31/05/2018", "sant": 8315.16, "rec": 13705.28, "desp": 8012.73, "satual": 13705.28}, {"arq": "C0153_Demonstrativomensal_042018.pdf", "comp": "04/2018", "per": "Periodo de 01/04/2018 até 30/04/2018", "sant": 8012.73, "rec": 9749.55, "desp": 7309.33, "satual": 9749.55}, {"arq": "C0153_Demonstrativomensal_032018.pdf", "comp": "03/2018", "per": "Periodo de 01/03/2018 até 31/03/2018", "sant": 7309.33, "rec": 10847.82, "desp": 4071.02, "satual": 10847.82}, {"arq": "C0153_Demonstrativomensal_012018.pdf", "comp": "01/2018", "per": "Periodo de 01/01/2018 até 31/01/2018", "sant": 4071.02, "rec": 9897.1, "desp": 14321.28, "satual": 9897.1}];
+    <footer class="mt-12 text-center text-slate-500 text-xs border-t border-slate-800 pt-6 pb-4">
+        <p class="font-semibold text-slate-400">Condomínio Edifício Residencial Casablanca — Campeche, Florianópolis/SC</p>
+        <p class="mt-1">Painel Interativo de Transparência e Gestão Orçamentária do Conselho Fiscal.</p>
+    </footer>
 
-        // Detailed entries from spreadsheet
-        const lancamentosData = [
-            // 12/2016
-            { comp: "12/2016", cat: "SALDO ANTERIOR", sub: "CAIXA - Caixa de Condomínio", val: 17.98 },
-            { comp: "12/2016", cat: "SALDO ANTERIOR", sub: "BANCOS - Caixa Econômica Federal (C/C)", val: 2294.78 },
-            { comp: "12/2016", cat: "SALDO ANTERIOR", sub: "BANCOS - Poupança (4029-0)", val: 83.96 },
-            { comp: "12/2016", cat: "SALDO ANTERIOR", sub: "BANCOS - Aplicação CEF", val: 2835.12 },
+    <script>
+        const rawResumoData = [
+            { arq: "C0153_Demonstrativomensal_122016.pdf", comp: "12/2016", per: "01/12/2016 a 31/12/2016", sant: 5231.84, rec: 8057.94, desp: 4972.74, satual: 8287.04 },
+            { arq: "C0153_Demonstrativomensal_012016.pdf", comp: "01/2016", per: "01/01/2016 a 31/01/2016", sant: 17035.65, rec: 7213.14, desp: 7523.20, satual: 10752.20 },
+            { arq: "C0153_Demonstrativomensal_122015.pdf", comp: "12/2015", per: "01/12/2015 a 31/12/2015", sant: 30022.70, rec: 8212.68, desp: 17035.65, satual: 21199.73 },
+            { arq: "C0153_Demonstrativomensal_062015.pdf", comp: "06/2015", per: "01/06/2015 a 30/06/2015", sant: 23378.29, rec: 10223.70, desp: 11488.41, satual: 14613.62 },
+            { arq: "C0153_Demonstrativomensal_082015.pdf", comp: "08/2015", per: "01/08/2015 a 31/08/2015", sant: 21959.59, rec: 10621.09, desp: 5589.46, satual: 8328.56 },
+            { arq: "C0153_Demonstrativomensal_092015.pdf", comp: "09/2015", per: "01/09/2015 a 30/09/2015", sant: 24252.12, rec: 10061.65, desp: 148.02, satual: 6501.57 },
+            { arq: "C0153_Demonstrativomensal_102015.pdf", comp: "10/2015", per: "01/10/2015 a 31/10/2015", sant: 27812.20, rec: 8857.21, desp: 5482.94, satual: 8512.40 },
+            { arq: "C0153_Demonstrativomensal_112015.pdf", comp: "11/2015", per: "01/11/2015 a 30/11/2015", sant: 28157.01, rec: 9095.36, desp: 4138.51, satual: 7229.67 },
+            { arq: "C0153_Demonstrativomensal_012017.pdf", comp: "01/2017", per: "01/01/2017 a 31/01/2017", sant: 5002.74, rec: 12511.90, desp: 17282.76, satual: 12511.90 },
+            { arq: "C0153_Demonstrativomensal_022017.pdf", comp: "02/2017", per: "01/02/2017 a 28/02/2017", sant: 761.96, rec: 8302.83, desp: 5002.74, satual: 8302.83 },
+            { arq: "C0153_Demonstrativomensal_032017.pdf", comp: "03/2017", per: "01/03/2017 a 31/03/2017", sant: 2690.77, rec: 9189.54, desp: 761.96, satual: 9189.54 },
+            { arq: "C0153_Demonstrativomensal_042017.pdf", comp: "04/2017", per: "01/04/2017 a 30/04/2017", sant: 3378.08, rec: 10111.84, desp: 2690.77, satual: 10111.84 },
+            { arq: "C0153_Demonstrativomensal_052017.pdf", comp: "05/2017", per: "01/05/2017 a 31/05/2017", sant: 1838.68, rec: 8895.23, desp: 3378.08, satual: 8895.23 },
+            { arq: "C0153_Demonstrativomensal_062017.pdf", comp: "06/2017", per: "01/06/2017 a 30/06/2017", sant: 3569.30, rec: 9461.38, desp: 1838.68, satual: 9461.38 },
+            { arq: "C0153_Demonstrativomensal_072017.pdf", comp: "07/2017", per: "01/07/2017 a 31/07/2017", sant: 3459.74, rec: 9983.11, desp: 3569.30, satual: 9983.11 },
+            { arq: "C0153_Demonstrativomensal_082017.pdf", comp: "08/2017", per: "01/08/2017 a 31/08/2017", sant: 1831.08, rec: 9712.92, desp: 1902.58, satual: 9641.42 },
+            { arq: "C0153_Demonstrativomensal_012018.pdf", comp: "01/2018", per: "01/01/2018 a 31/01/2018", sant: 4071.02, rec: 9897.10, desp: 14321.28, satual: 9897.10 },
+            { arq: "C0153_Demonstrativomensal_032018.pdf", comp: "03/2018", per: "01/03/2018 a 31/03/2018", sant: 7309.33, rec: 10847.82, desp: 4071.02, satual: 10847.82 },
+            { arq: "C0153_Demonstrativomensal_042018.pdf", comp: "04/2018", per: "01/04/2018 a 30/04/2018", sant: 8012.73, rec: 9749.55, desp: 7309.33, satual: 9749.55 },
+            { arq: "C0153_Demonstrativomensal_052018.pdf", comp: "05/2018", per: "01/05/2018 a 31/05/2018", sant: 8315.16, rec: 13705.28, desp: 8012.73, satual: 13705.28 },
+            { arq: "C0153_Demonstrativomensal_062018.pdf", comp: "06/2018", per: "01/06/2018 a 30/06/2018", sant: 8086.91, rec: 9486.37, desp: 8315.16, satual: 9486.37 },
+            { arq: "C0153_Demonstrativomensal_072018.pdf", comp: "07/2018", per: "01/07/2018 a 31/07/2018", sant: 6356.64, rec: 10888.13, desp: 8086.91, satual: 10888.13 },
+            { arq: "C0153_Demonstrativomensal_082018.pdf", comp: "08/2018", per: "01/08/2018 a 31/08/2018", sant: 8551.25, rec: 8779.65, desp: 6356.64, satual: 8779.65 },
+            { arq: "C0153_Demonstrativomensal_092018.pdf", comp: "09/2018", per: "01/09/2018 a 30/09/2018", sant: 16662.12, rec: 9277.06, desp: 8551.25, satual: 9277.06 },
+            { arq: "C0153_Demonstrativomensal_102018.pdf", comp: "10/2018", per: "01/10/2018 a 31/10/2018", sant: 25379.61, rec: 11534.41, desp: 16662.12, satual: 11534.41 },
+            { arq: "C0153_Demonstrativomensal_112018.pdf", comp: "11/2018", per: "01/11/2018 a 30/11/2018", sant: 36390.39, rec: 33981.27, desp: 25379.61, satual: 33981.27 },
+            { arq: "C0153_Demonstrativomensal_122018.pdf", comp: "12/2018", per: "01/12/2018 a 31/12/2018", sant: 17282.76, rec: 24326.37, desp: 36390.39, satual: 24326.37 },
+            { arq: "C0153_Demonstrativomensal_012019.pdf", comp: "01/2019", per: "01/01/2019 a 31/01/2019", sant: 7772.25, rec: 12136.29, desp: 28715.68, satual: 12136.29 },
+            { arq: "C0153_Demonstrativomensal_022019.pdf", comp: "02/2019", per: "01/02/2019 a 28/02/2019", sant: 9498.72, rec: 25389.65, desp: 7772.25, satual: 25389.65 },
+            { arq: "C0153_Demonstrativomensal_032019.pdf", comp: "03/2019", per: "01/03/2019 a 31/03/2019", sant: 10694.77, rec: 14189.89, desp: 9498.72, satual: 14189.89 },
+            { arq: "C0153_Demonstrativomensal_042019.pdf", comp: "04/2019", per: "01/04/2019 a 30/04/2019", sant: 14321.28, rec: 15858.12, desp: 10694.77, satual: 15858.12 },
+            { arq: "C0153_Demonstrativomensal_052019.pdf", comp: "05/2019", per: "01/05/2019 a 31/05/2019", sant: 10729.47, rec: 10611.46, desp: 40366.59, satual: 10611.46 },
+            { arq: "C0153_Demonstrativomensal_062019.pdf", comp: "06/2019", per: "01/06/2019 a 30/06/2019", sant: 13591.21, rec: 10992.89, desp: 10729.47, satual: 10992.89 },
+            { arq: "C0153_Demonstrativomensal_072019.pdf", comp: "07/2019", per: "01/07/2019 a 31/07/2019", sant: 14471.66, rec: 12642.74, desp: 13591.21, satual: 12642.74 },
+            { arq: "C0153_Demonstrativomensal_082019.pdf", comp: "08/2019", per: "01/08/2019 a 31/08/2019", sant: 13025.56, rec: 15792.89, desp: 14471.66, satual: 15792.89 },
+            { arq: "C0153_Demonstrativomensal_092019.pdf", comp: "09/2019", per: "01/09/2019 a 30/09/2019", sant: 15913.69, rec: 9798.10, desp: 13025.56, satual: 9798.10 },
+            { arq: "C0153_Demonstrativomensal_102019.pdf", comp: "10/2019", per: "01/10/2019 a 31/10/2019", sant: 22919.92, rec: 15049.46, desp: 15913.69, satual: 15049.46 },
+            { arq: "C0153_Demonstrativomensal_112019.pdf", comp: "11/2019", per: "01/11/2019 a 30/11/2019", sant: 22725.38, rec: 11091.75, desp: 22919.92, satual: 11091.75 },
+            { arq: "C0153_Demonstrativomensal_122019.pdf", comp: "12/2019", per: "01/12/2019 a 31/12/2019", sant: 28715.68, rec: 10401.70, desp: 22725.38, satual: 10401.70 },
+            { arq: "C0153_Demonstrativomensal_012020.pdf", comp: "01/2020", per: "01/01/2020 a 31/01/2020", sant: 32147.08, rec: 11249.10, desp: 37894.28, satual: 11249.10 },
+            { arq: "C0153_Demonstrativomensal_022020.pdf", comp: "02/2020", per: "01/02/2020 a 29/02/2020", sant: 36103.14, rec: 12414.71, desp: 32147.08, satual: 12414.71 },
+            { arq: "C0153_Demonstrativomensal_032020.pdf", comp: "03/2020", per: "01/03/2020 a 31/03/2020", sant: 41617.66, rec: 13441.63, desp: 36103.14, satual: 13441.63 },
+            { arq: "C0153_Demonstrativomensal_042020.pdf", comp: "04/2020", per: "01/04/2020 a 30/04/2020", sant: 42301.57, rec: 12314.40, desp: 41617.66, satual: 12314.40 },
+            { arq: "C0153_Demonstrativomensal_052020.pdf", comp: "05/2020", per: "01/05/2020 a 31/05/2020", sant: 42182.03, rec: 12603.22, desp: 42301.57, satual: 12603.22 },
+            { arq: "C0153_Demonstrativomensal_062020.pdf", comp: "06/2020", per: "01/06/2020 a 30/06/2020", sant: 40006.50, rec: 15673.01, desp: 42182.03, satual: 15673.01 },
+            { arq: "C0153_Demonstrativomensal_082020.pdf", comp: "07/2020", per: "01/07/2020 a 31/07/2020", sant: 37229.73, rec: 10044.86, desp: 40006.50, satual: 10044.86 },
+            { arq: "C0153_Demonstrativomensal_092020.pdf", comp: "09/2020", per: "01/09/2020 a 30/09/2020", sant: 40366.59, rec: 15188.43, desp: 37229.73, satual: 15188.43 },
+            { arq: "C0153_Demonstrativomensal_102020.pdf", comp: "10/2020", per: "01/10/2020 a 31/10/2020", sant: 37894.28, rec: 18157.90, desp: 44783.47, satual: 18157.90 },
+            { arq: "C0153_Demonstrativomensal_112020.pdf", comp: "11/2020", per: "01/11/2020 a 30/11/2020", sant: 44783.47, rec: 19054.43, desp: 46880.68, satual: 19054.43 },
+            { arq: "C0153_Demonstrativomensal_122020.pdf", comp: "12/2020", per: "01/12/2020 a 31/12/2020", sant: 46880.68, rec: 14483.43, desp: 55025.04, satual: 14483.43 },
+            { arq: "C0153_Demonstrativomensal_012021.pdf", comp: "01/2021", per: "01/01/2021 a 31/01/2021", sant: 55025.04, rec: 13463.19, desp: 54779.76, satual: 13463.19 },
+            { arq: "C0153_Demonstrativomensal_022021.pdf", comp: "02/2021", per: "01/02/2021 a 28/02/2021", sant: 54779.76, rec: 10971.62, desp: 56742.87, satual: 10971.62 },
+            { arq: "C0153_Demonstrativomensal_032021.pdf", comp: "03/2021", per: "01/03/2021 a 31/03/2021", sant: 56742.87, rec: 13244.91, desp: 57313.53, satual: 13244.91 },
+            { arq: "C0153_Demonstrativomensal_042021.pdf", comp: "04/2021", per: "01/04/2021 a 30/04/2021", sant: 57313.53, rec: 11507.61, desp: 57969.58, satual: 11507.61 },
+            { arq: "C0153_Demonstrativomensal_052021.pdf", comp: "05/2021", per: "01/05/2021 a 31/05/2021", sant: 57969.58, rec: 19653.62, desp: 50919.85, satual: 19653.62 },
+            { arq: "C0153_Demonstrativomensal_062021.pdf", comp: "06/2021", per: "01/06/2021 a 30/06/2021", sant: 50919.85, rec: 10879.46, desp: 53174.47, satual: 10879.46 },
+            { arq: "C0153_Demonstrativomensal_072021.pdf", comp: "07/2021", per: "01/07/2021 a 31/07/2021", sant: 53174.47, rec: 11243.89, desp: 56680.82, satual: 11243.89 },
+            { arq: "C0153_Demonstrativomensal_082021.pdf", comp: "08/2021", per: "01/08/2021 a 31/08/2021", sant: 56680.82, rec: 20230.17, desp: 51881.22, satual: 20230.17 },
+            { arq: "C0153_Demonstrativomensal_092021.pdf", comp: "09/2021", per: "01/09/2021 a 30/09/2021", sant: 51881.22, rec: 16218.18, desp: 50411.20, satual: 16218.18 },
+            { arq: "C0153_Demonstrativomensal_102021.pdf", comp: "10/2021", per: "01/10/2021 a 31/10/2021", sant: 50411.20, rec: 15811.82, desp: 47059.50, satual: 15811.82 },
+            { arq: "C0153_Demonstrativomensal_112021.pdf", comp: "11/2021", per: "01/11/2021 a 30/11/2021", sant: 47059.50, rec: 8791.17, desp: 52245.46, satual: 8791.17 },
+            { arq: "C0153_Demonstrativomensal_122021.pdf", comp: "12/2021", per: "01/12/2021 a 31/12/2021", sant: 52245.46, rec: 15029.39, desp: 50628.92, satual: 15029.39 },
+            { arq: "C0153_Demonstrativomensal_012022.pdf", comp: "01/2022", per: "01/01/2022 a 31/01/2022", sant: 50628.92, rec: 12539.67, desp: 52769.46, satual: 12539.67 },
+            { arq: "C0153_Demonstrativomensal_022022.pdf", comp: "02/2022", per: "01/02/2022 a 28/02/2022", sant: 52769.46, rec: 13849.55, desp: 51226.85, satual: 13849.55 },
+            { arq: "C0153_Demonstrativomensal_032022.pdf", comp: "03/2022", per: "01/03/2022 a 31/03/2022", sant: 51226.85, rec: 19946.65, desp: 43810.28, satual: 19946.65 },
+            { arq: "C0153_Demonstrativomensal_042022.pdf", comp: "04/2022", per: "01/04/2022 a 30/04/2022", sant: 43810.28, rec: 10119.38, desp: 48996.00, satual: 10119.38 },
+            { arq: "C0153_Demonstrativomensal_052022.pdf", comp: "05/2022", per: "01/05/2022 a 31/05/2022", sant: 48996.00, rec: 19779.90, desp: 43142.96, satual: 19779.90 },
+            { arq: "C0153_Demonstrativomensal_062022.pdf", comp: "06/2022", per: "01/06/2022 a 30/06/2022", sant: 43142.96, rec: 16219.68, desp: 39518.40, satual: 16219.68 },
+            { arq: "C0153_Demonstrativomensal_072022.pdf", comp: "07/2022", per: "01/07/2022 a 31/07/2022", sant: 39518.40, rec: 14867.38, desp: 41108.62, satual: 14867.38 },
+            { arq: "C0153_Demonstrativomensal_082022.pdf", comp: "08/2022", per: "01/08/2022 a 31/08/2022", sant: 41108.62, rec: 18680.43, desp: 43041.90, satual: 18680.43 },
+            { arq: "C0153_Demonstrativomensal_092022.pdf", comp: "09/2022", per: "01/09/2022 a 30/09/2022", sant: 43041.90, rec: 56600.84, desp: 1751.38, satual: 56600.84 },
+            { arq: "C0153_Demonstrativomensal_102022.pdf", comp: "10/2022", per: "01/10/2022 a 31/10/2022", sant: 1751.38, rec: 17683.12, desp: 4948.88, satual: 17683.12 },
+            { arq: "C0153_Demonstrativomensal_112022.pdf", comp: "11/2022", per: "01/11/2022 a 30/11/2022", sant: 4948.88, rec: 24634.53, desp: 2663.90, satual: 24634.53 },
+            { arq: "C0153_Demonstrativomensal_122022.pdf", comp: "12/2022", per: "01/12/2022 a 31/12/2022", sant: 2663.90, rec: 18498.34, desp: 3437.75, satual: 18498.34 },
+            { arq: "C0153_Demonstrativomensal_012023.pdf", comp: "01/2023", per: "01/01/2023 a 31/01/2023", sant: 3437.75, rec: 12718.92, desp: 7984.58, satual: 12718.92 },
+            { arq: "C0153_Demonstrativomensal_022023.pdf", comp: "02/2023", per: "01/02/2023 a 28/02/2023", sant: 7984.58, rec: 15317.82, desp: 9513.70, satual: 15317.82 },
+            { arq: "C0153_Demonstrativomensal_032023.pdf", comp: "03/2023", per: "01/03/2023 a 31/03/2023", sant: 9513.70, rec: 19741.36, desp: 10045.59, satual: 19741.36 },
+            { arq: "C0153_Demonstrativomensal_042023.pdf", comp: "04/2023", per: "01/04/2023 a 30/04/2023", sant: 10045.59, rec: 13677.49, desp: 11553.13, satual: 13677.49 },
+            { arq: "C0153_Demonstrativomensal_052023.pdf", comp: "05/2023", per: "01/05/2023 a 31/05/2023", sant: 11553.13, rec: 18330.44, desp: 12602.31, satual: 18330.44 },
+            { arq: "C0153_Demonstrativomensal_062023.pdf", comp: "06/2023", per: "01/06/2023 a 30/06/2023", sant: 12602.31, rec: 15035.68, desp: 10385.58, satual: 15035.68 },
+            { arq: "C0153_Demonstrativomensal_072023.pdf", comp: "07/2023", per: "01/07/2023 a 31/07/2023", sant: 10385.58, rec: 25305.29, desp: 1657.28, satual: 25305.29 },
+            { arq: "C0153_Demonstrativomensal_082023.pdf", comp: "08/2023", per: "01/08/2023 a 31/08/2023", sant: 1657.28, rec: 17295.82, desp: 44183.52, satual: 17295.82 },
+            { arq: "C0106_Demonstrativomensal_092023.pdf", comp: "09/2023", per: "01/09/2023 a 30/09/2023", sant: 44183.52, rec: 48316.21, desp: 8053.75, satual: 48316.21 },
+            { arq: "C0153_Demonstrativomensal_102023.pdf", comp: "10/2023", per: "01/10/2023 a 31/10/2023", sant: 8053.75, rec: 14469.68, desp: 14452.86, satual: 14469.68 },
+            { arq: "C0153_Demonstrativomensal_112023.pdf", comp: "11/2023", per: "01/11/2023 a 30/11/2023", sant: 14452.86, rec: 18573.71, desp: 18141.45, satual: 18573.71 },
+            { arq: "C0153_Demonstrativomensal_122023.pdf", comp: "12/2023", per: "01/12/2023 a 31/12/2023", sant: 18141.45, rec: 18642.90, desp: 19717.95, satual: 18642.90 },
+            { arq: "C0153_Demonstrativomensal_012024.pdf", comp: "01/2024", per: "01/01/2024 a 31/01/2024", sant: 19717.95, rec: 21122.05, desp: 23438.02, satual: 21122.05 },
+            { arq: "C0153_Demonstrativomensal_022024.pdf", comp: "02/2024", per: "01/02/2024 a 29/02/2024", sant: 23438.02, rec: 22698.40, desp: 47297.11, satual: 22698.40 },
+            { arq: "C0153_Demonstrativomensal_032024.pdf", comp: "03/2024", per: "01/03/2024 a 31/03/2024", sant: 47297.11, rec: 21746.59, desp: 53365.55, satual: 21746.59 },
+            { arq: "C0153_Demonstrativomensal_042024.pdf", comp: "04/2024", per: "01/04/2024 a 30/04/2024", sant: 53365.55, rec: 33568.95, desp: 47324.32, satual: 33568.95 },
+            { arq: "C0153_Demonstrativomensal_052024.pdf", comp: "05/2024", per: "01/05/2024 a 31/05/2024", sant: 47324.32, rec: 32634.14, desp: 42117.71, satual: 32634.14 },
+            { arq: "C0153_Demonstrativomensal_062024.pdf", comp: "06/2024", per: "01/06/2024 a 30/06/2024", sant: 42117.71, rec: 37224.15, desp: 32408.38, satual: 37224.15 },
+            { arq: "C0153_Demonstrativomensal_072024.pdf", comp: "07/2024", per: "01/07/2024 a 31/07/2024", sant: 32408.38, rec: 35942.83, desp: 26169.99, satual: 35942.83 },
+            { arq: "C0153_Demonstrativomensal_082024.pdf", comp: "08/2024", per: "01/08/2024 a 31/08/2024", sant: 26169.99, rec: 33001.87, desp: 53365.55, satual: 33001.87 },
+            { arq: "C0153_Demonstrativomensal_102024.pdf", comp: "10/2024", per: "01/10/2024 a 31/10/2024", sant: 17755.82, rec: 25890.45, desp: 21391.10, satual: 25890.45 },
+            { arq: "C0153_Demonstrativomensal_112024.pdf", comp: "11/2024", per: "01/11/2024 a 30/11/2024", sant: 21391.10, rec: 42181.46, desp: -493.55, satual: 42181.46 },
+            { arq: "C0153_Demonstrativomensal_122024.pdf", comp: "12/2024", per: "01/12/2024 a 31/12/2024", sant: -493.55, rec: 39472.78, desp: 10732.14, satual: 39472.78 },
+            { arq: "C0153_Demonstrativomensal_012025.pdf", comp: "01/2025", per: "01/01/2025 a 31/01/2025", sant: -15611.74, rec: 40035.76, desp: 11727.75, satual: 40035.76 },
+            { arq: "C0153_Demonstrativomensal_022025.pdf", comp: "02/2025", per: "01/02/2025 a 28/02/2025", sant: -18383.63, rec: 25929.91, desp: -15611.74, satual: 25929.91 },
+            { arq: "C0153_Demonstrativomensal_032025.pdf", comp: "03/2025", per: "01/03/2025 a 31/03/2025", sant: -15918.58, rec: 38188.09, desp: -18383.63, satual: 38188.09 },
+            { arq: "C0153_Demonstrativomensal_042025.pdf", comp: "04/2025", per: "01/04/2025 a 30/04/2025", sant: -14073.48, rec: 51443.94, desp: -15918.58, satual: 51443.94 },
+            { arq: "C0153_Demonstrativomensal_052025.pdf", comp: "05/2025", per: "01/05/2025 a 31/05/2025", sant: -21094.23, rec: 29749.86, desp: -14073.48, satual: 29749.86 },
+            { arq: "C0153_Demonstrativomensal_062025.pdf", comp: "06/2025", per: "01/06/2025 a 30/06/2025", sant: -19395.15, rec: 29229.57, desp: -21094.23, satual: 29229.57 },
+            { arq: "C0153_Demonstrativomensal_072025.pdf", comp: "07/2025", per: "01/07/2025 a 31/07/2025", sant: -10409.61, rec: 33081.82, desp: -19395.15, satual: 33081.82 },
+            { arq: "C0153_Demonstrativomensal_082025.pdf", comp: "08/2025", per: "01/08/2025 a 31/08/2025", sant: -9706.16, rec: 25699.29, desp: -10409.61, satual: 25699.29 },
+            { arq: "C0153_Demonstrativomensal_102025.pdf", comp: "10/2025", per: "01/10/2025 a 31/10/2025", sant: 7946.31, rec: 27700.78, desp: -9706.16, satual: 27700.78 },
+            { arq: "C0153_Demonstrativomensal_112025.pdf", comp: "11/2025", per: "01/11/2025 a 30/11/2025", sant: 19617.89, rec: 39221.41, desp: 7946.31, satual: 39221.41 },
+            { arq: "C0153_Demonstrativomensal_122025.pdf", comp: "12/2025", per: "01/12/2025 a 31/12/2025", sant: 10732.14, rec: 35008.35, desp: 19617.89, satual: 35008.35 },
+            { arq: "C0153_Demonstrativomensal_012026.pdf", comp: "01/2026", per: "01/01/2026 a 31/01/2026", sant: 11727.75, rec: 25983.51, desp: 8876.90, satual: 25983.51 },
+            { arq: "C0153_Demonstrativomensal_022026.pdf", comp: "02/2026", per: "01/02/2026 a 28/02/2026", sant: 8876.90, rec: 19262.88, desp: 10992.65, satual: 19262.88 },
+            { arq: "C0153_Demonstrativomensal_032026.pdf", comp: "03/2026", per: "01/03/2026 a 31/03/2026", sant: 10992.65, rec: 18448.85, desp: 18414.22, satual: 18448.85 },
+            { arq: "C0153_Demonstrativomensal_042026.pdf", comp: "04/2026", per: "01/04/2026 a 30/04/2026", sant: 18414.22, rec: 40393.72, desp: 21000.00, satual: 40393.72 }
+        ];
+
+        const rawLancamentosData = [
+            { comp: "12/2016", cat: "SALDO ANTERIOR", sub: "Caixa de Condomínio", val: 17.98 },
+            { comp: "12/2016", cat: "SALDO ANTERIOR", sub: "Caixa Econômica Federal (C/C)", val: 2294.78 },
+            { comp: "12/2016", cat: "SALDO ANTERIOR", sub: "Caixa Econômica Federal - Poupança (4029-0)", val: 83.96 },
+            { comp: "12/2016", cat: "SALDO ANTERIOR", sub: "Aplicação CEF", val: 2835.12 },
             { comp: "12/2016", cat: "RECEITAS", sub: "Taxa de Condomínio", val: 5276.06 },
             { comp: "12/2016", cat: "RECEITAS", sub: "Garagem", val: 955.46 },
             { comp: "12/2016", cat: "RECEITAS", sub: "Fundo de Reserva", val: 623.12 },
-            { comp: "12/2016", cat: "RECEITAS", sub: "Gás e Água", val: 1164.38 },
-            { comp: "12/2016", cat: "RECEITAS", sub: "Multas & Juros de Aplicação", val: 38.92 },
-            { comp: "12/2016", cat: "DESPESAS", sub: "Manutenção Elevadores & ETE", val: 730.00 },
+            { comp: "12/2016", cat: "RECEITAS", sub: "Gás", val: 337.90 },
+            { comp: "12/2016", cat: "RECEITAS", sub: "Multas", val: 27.16 },
+            { comp: "12/2016", cat: "RECEITAS", sub: "Água", val: 826.48 },
+            { comp: "12/2016", cat: "RECEITAS", sub: "Juros Poupança / Aplicação", val: 11.76 },
+            { comp: "12/2016", cat: "SALDO ANTERIOR", sub: "ENCARGOS SOCIAIS - INSS", val: 743.71 },
+            { comp: "12/2016", cat: "SALDO ANTERIOR", sub: "HONORÁRIOS - Síndico e Contábil", val: 1634.96 },
+            { comp: "12/2016", cat: "SALDO ANTERIOR", sub: "UTILIDADES/SERVIÇOS - Energia e Água", val: 1165.51 },
+            { comp: "12/2016", cat: "SALDO ANTERIOR", sub: "IMPOSTOS/TAXAS - ISS", val: 179.68 },
+            { comp: "12/2016", cat: "DESPESAS", sub: "Manutenção Elevadores", val: 280.00 },
+            { comp: "12/2016", cat: "DESPESAS", sub: "Manutenção Estação Tratamento (ETE)", val: 450.00 },
             { comp: "12/2016", cat: "DESPESAS", sub: "Serviços de Limpeza e Jardinagem", val: 3644.47 },
-            { comp: "12/2016", cat: "DESPESAS", sub: "Honorários Síndico / Contábil", val: 1634.96 },
-            { comp: "12/2016", cat: "DESPESAS", sub: "Energia Elétrica & Água", val: 1152.76 },
-            { comp: "12/2016", cat: "DESPESAS", sub: "Tarifas Bancárias e Impostos", val: 367.96 },
-            { comp: "12/2016", cat: "SALDO ATUAL", sub: "CAIXA - Caixa de Condomínio", val: 17.98 },
-            { comp: "12/2016", cat: "SALDO ATUAL", sub: "BANCOS - Caixa Econômica Federal (C/C)", val: 4879.12 },
-            { comp: "12/2016", cat: "SALDO ATUAL", sub: "BANCOS - Aplicação CEF", val: 105.64 },
-
-            // 01/2016
-            { comp: "01/2016", cat: "SALDO ANTERIOR", sub: "BANCOS - Caixa Econômica Federal (C/C)", val: 3961.26 },
-            { comp: "01/2016", cat: "SALDO ANTERIOR", sub: "BANCOS - Aplicações / Poupança", val: 13056.41 },
+            { comp: "12/2016", cat: "DESPESAS", sub: "Tarifa Bancária e Cobrança", val: 166.40 },
+            { comp: "12/2016", cat: "DESPESAS", sub: "com Correio", val: 11.90 },
+            { comp: "12/2016", cat: "SALDO ATUAL", sub: "Caixa de Condomínio", val: 17.98 },
+            { comp: "12/2016", cat: "SALDO ATUAL", sub: "Caixa Econômica Federal (C/C)", val: 4879.12 },
+            { comp: "12/2016", cat: "SALDO ATUAL", sub: "Aplicação CEF", val: 105.64 },
+            { comp: "01/2016", cat: "SALDO ANTERIOR", sub: "Caixa Econômica Federal (C/C)", val: 3961.26 },
+            { comp: "01/2016", cat: "SALDO ANTERIOR", sub: "Aplicação CEF / Poupança", val: 13056.41 },
             { comp: "01/2016", cat: "RECEITAS", sub: "Taxa de Condomínio", val: 4653.71 },
-            { comp: "01/2016", cat: "RECEITAS", sub: "Garagem e Fundo de Reserva", val: 1413.47 },
-            { comp: "01/2016", cat: "RECEITAS", sub: "Gás, Água e Salão de Festas", val: 1019.24 },
-            { comp: "01/2016", cat: "DESPESAS", sub: "Aquisição de Portão Novo", val: 1700.00 },
-            { comp: "01/2016", cat: "DESPESAS", sub: "Manutenção do Edifício", val: 462.25 },
+            { comp: "01/2016", cat: "RECEITAS", sub: "Garagem", val: 861.93 },
+            { comp: "01/2016", cat: "RECEITAS", sub: "Fundo de Reserva", val: 551.54 },
+            { comp: "01/2016", cat: "RECEITAS", sub: "Gás e Água", val: 969.24 },
+            { comp: "01/2016", cat: "RECEITAS", sub: "Salão de Festa - Uso", val: 50.00 },
+            { comp: "01/2016", cat: "DESPESAS", sub: "Aquisição de Portão", val: 1700.00 },
+            { comp: "01/2016", cat: "DESPESAS", sub: "Manutenção do(s) Edifício(s)", val: 462.25 },
+            { comp: "01/2016", cat: "DESPESAS", sub: "Serviços Prestados por Terceiros", val: 700.00 },
             { comp: "01/2016", cat: "DESPESAS", sub: "Serviços de Limpeza e Jardinagem", val: 3268.61 },
-            { comp: "01/2016", cat: "DESPESAS", sub: "Gás de Cozinha Condominial", val: 1247.22 },
-            { comp: "01/2016", cat: "DESPESAS", sub: "Tarifas Bancárias e Postais", val: 145.12 },
-            { comp: "01/2016", cat: "SALDO ATUAL", sub: "BANCOS - Caixa Econômica Federal (C/C)", val: 1081.85 },
-            { comp: "01/2016", cat: "SALDO ATUAL", sub: "BANCOS - Poupança e Aplicações", val: 12396.76 },
-
-            // 12/2015
+            { comp: "01/2016", cat: "DESPESAS", sub: "Gás Condominial", val: 1247.22 },
+            { comp: "01/2016", cat: "DESPESAS", sub: "Tarifa Bancária e Impostos", val: 108.72 },
+            { comp: "01/2016", cat: "SALDO ATUAL", sub: "Caixa Econômica Federal (C/C)", val: 1081.85 },
+            { comp: "01/2016", cat: "SALDO ATUAL", sub: "Poupança e Aplicação CEF", val: 12396.76 },
             { comp: "12/2015", cat: "RECEITAS", sub: "Taxa de Condomínio", val: 5295.82 },
-            { comp: "12/2015", cat: "RECEITAS", sub: "Fundo de Reserva & Garagem", val: 1601.05 },
-            { comp: "12/2015", cat: "DESPESAS", sub: "Serviços de Pintura Predial", val: 9000.00 },
+            { comp: "12/2015", cat: "RECEITAS", sub: "Garagem e Fundo de Reserva", val: 1601.05 },
+            { comp: "12/2015", cat: "DESPESAS", sub: "Serviços de Pintura", val: 9000.00 },
             { comp: "12/2015", cat: "DESPESAS", sub: "Aquisição de Bomba e Portão", val: 3810.00 },
             { comp: "12/2015", cat: "DESPESAS", sub: "Serviços de Limpeza e Jardinagem", val: 3269.76 },
             { comp: "12/2015", cat: "DESPESAS", sub: "Manutenção de Elevadores", val: 320.00 }
@@ -349,31 +561,42 @@
         let chartDespesasInstance = null;
 
         function formatBRL(val) {
+            if (val === undefined || val === null || isNaN(val)) return "R$ 0,00";
             return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         }
 
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            document.getElementById('btn-' + tabId).classList.add('active');
+            
+            const targetContent = document.getElementById(tabId);
+            const targetBtn = document.getElementById('btn-' + tabId);
+            
+            if (targetContent) targetContent.classList.add('active');
+            if (targetBtn) targetBtn.classList.add('active');
         }
 
         function updateDashboard() {
             const ano = document.getElementById('dashFilterAno').value;
             const mes = document.getElementById('dashFilterMes').value;
+            const tipo = document.getElementById('dashFilterTipo').value;
 
-            const filtered = resumoMensalData.filter(d => {
-                const [dMes, dAno] = d.comp.split('/');
-                const mAno = (ano === "TODOS" || dAno === ano);
-                const mMes = (mes === "TODOS" || dMes === mes);
-                return mAno && mMes;
+            const filtered = rawResumoData.filter(d => {
+                const parts = d.comp.split('/');
+                const dMes = parts[0];
+                const dAno = parts[1];
+                
+                const matchAno = (ano === "TODOS" || dAno === ano);
+                const matchMes = (mes === "TODOS" || dMes === mes);
+                return matchAno && matchMes;
             });
 
-            let totRec = 0, totDesp = 0;
+            let totRec = 0;
+            let totDesp = 0;
+
             filtered.forEach(d => {
-                totRec += d.rec;
-                totDesp += d.desp;
+                if (tipo === 'TODOS' || tipo === 'RECEITAS') totRec += d.rec;
+                if (tipo === 'TODOS' || tipo === 'DESPESAS') totDesp += Math.abs(d.desp);
             });
 
             const saldo = totRec - totDesp;
@@ -384,27 +607,38 @@
             document.getElementById('kpiSaldo').innerText = formatBRL(saldo);
             document.getElementById('kpiRatio').innerText = ratio + "%";
 
-            renderCharts(filtered);
+            // Update Saldo Color
+            const kpiSaldoEl = document.getElementById('kpiSaldo');
+            if (saldo >= 0) {
+                kpiSaldoEl.className = "text-2xl font-bold text-emerald-400 font-mono";
+            } else {
+                kpiSaldoEl.className = "text-2xl font-bold text-rose-400 font-mono";
+            }
+
+            renderCharts(filtered, tipo);
         }
 
-        function renderCharts(data) {
+        function renderCharts(data, tipoFilter) {
             const comps = data.map(d => d.comp);
             const recs = data.map(d => d.rec);
-            const desps = data.map(d => d.desp);
+            const desps = data.map(d => Math.abs(d.desp));
 
             if (chartEvolucaoInstance) chartEvolucaoInstance.destroy();
             if (chartDespesasInstance) chartDespesasInstance.destroy();
 
             const ctx1 = document.getElementById('chartEvolucao').getContext('2d');
+            
+            const datasets = [];
+            if (tipoFilter === 'TODOS' || tipoFilter === 'RECEITAS') {
+                datasets.push({ label: 'Receitas Total', data: recs, backgroundColor: '#10b981', borderRadius: 4 });
+            }
+            if (tipoFilter === 'TODOS' || tipoFilter === 'DESPESAS') {
+                datasets.push({ label: 'Despesas Total', data: desps, backgroundColor: '#f43f5e', borderRadius: 4 });
+            }
+
             chartEvolucaoInstance = new Chart(ctx1, {
                 type: 'bar',
-                data: {
-                    labels: comps,
-                    datasets: [
-                        { label: 'Receitas Total', data: recs, backgroundColor: '#10b981', borderRadius: 4 },
-                        { label: 'Despesas Total', data: desps, backgroundColor: '#f43f5e', borderRadius: 4 }
-                    ]
-                },
+                data: { labels: comps, datasets: datasets },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
@@ -416,10 +650,10 @@
                 }
             });
 
-            // Aggregation by Subcategory
+            // Aggregate Despesas by Subcategory
             const despsMap = {};
-            lancamentosData.filter(d => d.cat === 'DESPESAS').forEach(d => {
-                despsMap[d.sub] = (despsMap[d.sub] || 0) + d.val;
+            rawLancamentosData.filter(d => d.cat === 'DESPESAS').forEach(d => {
+                despsMap[d.sub] = (despsMap[d.sub] || 0) + Math.abs(d.val);
             });
 
             const ctx2 = document.getElementById('chartDespesas').getContext('2d');
@@ -429,86 +663,121 @@
                     labels: Object.keys(despsMap),
                     datasets: [{
                         data: Object.values(despsMap),
-                        backgroundColor: ['#f43f5e', '#38bdf8', '#f59e0b', '#ec4899', '#8b5cf6', '#10b981', '#64748b'],
+                        backgroundColor: ['#f43f5e', '#38bdf8', '#f59e0b', '#ec4899', '#8b5cf6', '#10b981', '#64748b', '#06b6d4'],
                         borderColor: '#1e293b'
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { position: 'right', labels: { color: '#94a3b8', font: { size: 10 } } } }
+                    plugins: { legend: { position: 'right', labels: { color: '#94a3b8', font: { size: 11 } } } }
                 }
             });
         }
 
-        function resetFilters() {
+        function resetDashboardFilters() {
             document.getElementById('dashFilterAno').value = "TODOS";
             document.getElementById('dashFilterMes').value = "TODOS";
+            document.getElementById('dashFilterTipo').value = "TODOS";
             updateDashboard();
         }
 
         function renderTables() {
-            // Resumo Mensal
-            const bodyRes = document.getElementById('tableResumoMensal');
-            bodyRes.innerHTML = resumoMensalData.map(r => `
-                <tr class="hover:bg-slate-800/50">
-                    <td class="p-3 font-mono font-bold text-emerald-400">${r.comp}</td>
-                    <td class="p-3 font-mono text-xs text-slate-400">${r.arq}</td>
-                    <td class="p-3 text-xs text-slate-300">${r.per}</td>
-                    <td class="p-3 text-right font-mono">${formatBRL(r.sant)}</td>
-                    <td class="p-3 text-right font-mono text-emerald-400">${formatBRL(r.rec)}</td>
-                    <td class="p-3 text-right font-mono text-rose-400">${formatBRL(r.desp)}</td>
-                    <td class="p-3 text-right font-mono font-bold text-white">${formatBRL(r.satual)}</td>
-                </tr>
-            `).join('');
+            // 1. Resumo Mensal
+            renderResumoTable(rawResumoData);
 
-            // Lançamentos
-            renderLancamentosTable(lancamentosData);
+            // 2. Lançamentos Detalhados
+            renderLancamentosTable(rawLancamentosData);
 
-            // Computados vs Faltantes
-            const compSet = new Set(resumoMensalData.map(r => r.comp));
-            document.getElementById('gridComputados').innerHTML = Array.from(compSet).sort().map(m => `
-                <div class="bg-emerald-950/40 border border-emerald-800/60 p-2 rounded-lg text-center">
+            // 3. Meses Computados vs Meses Faltantes (2015 to 2026)
+            const compSet = new Set(rawResumoData.map(r => r.comp));
+            
+            const gridComp = document.getElementById('gridComputados');
+            gridComp.innerHTML = Array.from(compSet).sort().map(m => `
+                <div class="bg-emerald-950/40 border border-emerald-800/60 p-2.5 rounded-lg text-center">
                     <span class="text-xs font-mono font-bold text-emerald-400 block">${m}</span>
-                    <span class="text-[10px] text-emerald-600">Processado</span>
+                    <span class="text-[10px] text-emerald-600 font-medium">Processado</span>
                 </div>
             `).join('');
 
             const allMonths = [];
-            for(let y=2015; y<=2026; y++) {
-                for(let m=1; m<=12; m++) {
-                    allMonths.push(`${m.toString().padStart(2,'0')}/${y}`);
+            for (let y = 2015; y <= 2026; y++) {
+                for (let m = 1; m <= 12; m++) {
+                    allMonths.push(`${m.toString().padStart(2, '0')}/${y}`);
                 }
             }
+
             const faltantes = allMonths.filter(m => !compSet.has(m));
-            document.getElementById('gridFaltantes').innerHTML = faltantes.map(m => `
-                <div class="bg-slate-900 border border-rose-900/40 p-2 rounded-lg text-center">
-                    <span class="text-xs font-mono text-rose-400 block">${m}</span>
+            const gridFalt = document.getElementById('gridFaltantes');
+            gridFalt.innerHTML = faltantes.map(m => `
+                <div class="bg-slate-900 border border-rose-900/40 p-2.5 rounded-lg text-center">
+                    <span class="text-xs font-mono font-medium text-rose-400 block">${m}</span>
                     <span class="text-[10px] text-slate-500">Pendente</span>
                 </div>
             `).join('');
 
-            // Dynamic Pivot Tables
+            // 4. Dynamic Pivot Tables (Cat - Saldo Ant, Receitas, Despesas, Saldo Atual)
             renderPivot('SALDO ANTERIOR', 'tableSaldoAnt');
             renderPivot('RECEITAS', 'tableCatReceitas');
             renderPivot('DESPESAS', 'tableCatDespesas');
             renderPivot('SALDO ATUAL', 'tableSaldoAtual');
         }
 
-        function renderLancamentosTable(data) {
-            document.getElementById('tableLancamentos').innerHTML = data.map(d => `
-                <tr class="hover:bg-slate-800/50">
-                    <td class="p-3 font-mono text-slate-300">${d.comp}</td>
-                    <td class="p-3"><span class="px-2 py-0.5 text-xs rounded-full font-semibold border ${d.cat==='RECEITAS'?'bg-emerald-950/60 text-emerald-400 border-emerald-800':d.cat==='DESPESAS'?'bg-rose-950/60 text-rose-400 border-rose-800':'bg-slate-800 text-slate-300 border-slate-700'}">${d.cat}</span></td>
-                    <td class="p-3 text-slate-200">${d.sub}</td>
-                    <td class="p-3 text-right font-mono font-semibold ${d.cat==='RECEITAS'?'text-emerald-400':d.cat==='DESPESAS'?'text-rose-400':'text-slate-300'}">${formatBRL(d.val)}</td>
+        function renderResumoTable(data) {
+            const body = document.getElementById('tableResumoMensal');
+            body.innerHTML = data.map(r => `
+                <tr class="hover:bg-slate-800/50 transition border-b border-slate-800/60">
+                    <td class="p-3 font-mono font-bold text-emerald-400">${r.comp}</td>
+                    <td class="p-3 font-mono text-xs text-slate-400">${r.arq}</td>
+                    <td class="p-3 text-xs text-slate-300">${r.per}</td>
+                    <td class="p-3 text-right font-mono">${formatBRL(r.sant)}</td>
+                    <td class="p-3 text-right font-mono text-emerald-400">${formatBRL(r.rec)}</td>
+                    <td class="p-3 text-right font-mono text-rose-400">${formatBRL(Math.abs(r.desp))}</td>
+                    <td class="p-3 text-right font-mono font-bold text-white">${formatBRL(r.satual)}</td>
                 </tr>
             `).join('');
         }
 
-        function filterLancamentos() {
+        function filterResumoTable() {
+            const query = document.getElementById('searchResumo').value.toLowerCase();
+            const filtered = rawResumoData.filter(r => 
+                r.comp.toLowerCase().includes(query) || 
+                r.arq.toLowerCase().includes(query) || 
+                r.per.toLowerCase().includes(query)
+            );
+            renderResumoTable(filtered);
+        }
+
+        function renderLancamentosTable(data) {
+            const body = document.getElementById('tableLancamentos');
+            body.innerHTML = data.map(d => {
+                let badgeClass = "bg-slate-800 text-slate-300 border-slate-700";
+                let textValClass = "text-slate-200";
+
+                if (d.cat === 'RECEITAS') {
+                    badgeClass = "bg-emerald-950/60 text-emerald-400 border-emerald-800";
+                    textValClass = "text-emerald-400 font-semibold";
+                } else if (d.cat === 'DESPESAS') {
+                    badgeClass = "bg-rose-950/60 text-rose-400 border-rose-800";
+                    textValClass = "text-rose-400 font-semibold";
+                } else if (d.cat === 'SALDO ANTERIOR' || d.cat === 'SALDO ATUAL') {
+                    badgeClass = "bg-indigo-950/60 text-indigo-300 border-indigo-800";
+                }
+
+                return `
+                    <tr class="hover:bg-slate-800/50 transition border-b border-slate-800/60">
+                        <td class="p-3 font-mono text-slate-300">${d.comp}</td>
+                        <td class="p-3"><span class="px-2.5 py-1 text-xs rounded-full font-semibold border ${badgeClass}">${d.cat}</span></td>
+                        <td class="p-3 text-slate-200">${d.sub}</td>
+                        <td class="p-3 text-right font-mono ${textValClass}">${formatBRL(Math.abs(d.val))}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterLancamentosTable() {
             const query = document.getElementById('searchLanc').value.toLowerCase();
-            const filtered = lancamentosData.filter(d => 
+            const filtered = rawLancamentosData.filter(d => 
                 d.sub.toLowerCase().includes(query) || 
                 d.cat.toLowerCase().includes(query) || 
                 d.comp.toLowerCase().includes(query)
@@ -518,19 +787,28 @@
 
         function renderPivot(catName, targetId) {
             const totals = {};
-            lancamentosData.filter(d => d.cat === catName).forEach(d => {
-                totals[d.sub] = (totals[d.sub] || 0) + d.val;
+            rawLancamentosData.filter(d => d.cat === catName).forEach(d => {
+                totals[d.sub] = (totals[d.sub] || 0) + Math.abs(d.val);
             });
 
-            document.getElementById(targetId).innerHTML = Object.entries(totals).map(([sub, val]) => `
-                <tr class="hover:bg-slate-800/50">
+            const body = document.getElementById(targetId);
+            if (!body) return;
+
+            const entries = Object.entries(totals);
+            if (entries.length === 0) {
+                body.innerHTML = `<tr><td colspan="2" class="p-4 text-center text-slate-500 italic">Sem registros para esta categoria</td></tr>`;
+                return;
+            }
+
+            body.innerHTML = entries.map(([sub, val]) => `
+                <tr class="hover:bg-slate-800/50 border-b border-slate-800/60">
                     <td class="p-3 text-slate-200">${sub}</td>
                     <td class="p-3 text-right font-mono font-bold text-white">${formatBRL(val)}</td>
                 </tr>
             `).join('');
         }
 
-        window.onload = () => {
+        window.onload = function() {
             updateDashboard();
             renderTables();
         };
