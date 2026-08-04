@@ -289,9 +289,12 @@
 
     <!-- TAB 6: CAT - SALDO ANTERIOR -->
     <div id="tab-cat-saldo-ant" class="tab-content card rounded-xl p-5 shadow-xl">
-        <h3 class="text-lg font-bold text-slate-200 mb-4 flex items-center gap-2">
-            <i class="fas fa-history text-indigo-400"></i> Tabela Dinâmica: Cat — SALDO ANTERIOR
-        </h3>
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
+            <h3 class="text-lg font-bold text-slate-200 flex items-center gap-2">
+                <i class="fas fa-history text-indigo-400"></i> Tabela Dinâmica: Cat — SALDO ANTERIOR
+            </h3>
+            <input type="text" id="searchCatSaldoAnt" onkeyup="filterPivot('SALDO ANTERIOR', 'tableSaldoAnt', 'searchCatSaldoAnt')" placeholder="Pesquisar conta..." class="bg-slate-900 border border-slate-700 text-slate-200 px-3 py-1.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-indigo-500 w-full sm:w-64">
+        </div>
         <div class="overflow-x-auto">
             <table class="w-full text-left text-sm text-slate-300">
                 <thead class="bg-slate-900 text-xs uppercase font-semibold text-slate-400 border-b border-slate-700">
@@ -307,9 +310,12 @@
 
     <!-- TAB 7: CAT - RECEITAS -->
     <div id="tab-cat-receitas" class="tab-content card rounded-xl p-5 shadow-xl">
-        <h3 class="text-lg font-bold text-slate-200 mb-4 flex items-center gap-2">
-            <i class="fas fa-arrow-down-left text-emerald-400"></i> Tabela Dinâmica: Cat — RECEITAS
-        </h3>
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
+            <h3 class="text-lg font-bold text-slate-200 flex items-center gap-2">
+                <i class="fas fa-arrow-down-left text-emerald-400"></i> Tabela Dinâmica: Cat — RECEITAS
+            </h3>
+            <input type="text" id="searchCatReceitas" onkeyup="filterPivot('RECEITAS', 'tableCatReceitas', 'searchCatReceitas')" placeholder="Pesquisar receita..." class="bg-slate-900 border border-slate-700 text-slate-200 px-3 py-1.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500 w-full sm:w-64">
+        </div>
         <div class="overflow-x-auto">
             <table class="w-full text-left text-sm text-slate-300">
                 <thead class="bg-slate-900 text-xs uppercase font-semibold text-slate-400 border-b border-slate-700">
@@ -325,9 +331,12 @@
 
     <!-- TAB 8: CAT - DESPESAS -->
     <div id="tab-cat-despesas" class="tab-content card rounded-xl p-5 shadow-xl">
-        <h3 class="text-lg font-bold text-slate-200 mb-4 flex items-center gap-2">
-            <i class="fas fa-arrow-up-right text-rose-400"></i> Tabela Dinâmica: Cat — DESPESAS
-        </h3>
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
+            <h3 class="text-lg font-bold text-slate-200 flex items-center gap-2">
+                <i class="fas fa-arrow-up-right text-rose-400"></i> Tabela Dinâmica: Cat — DESPESAS
+            </h3>
+            <input type="text" id="searchCatDespesas" onkeyup="filterPivot('DESPESAS', 'tableCatDespesas', 'searchCatDespesas')" placeholder="Pesquisar despesa..." class="bg-slate-900 border border-slate-700 text-slate-200 px-3 py-1.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-rose-500 w-full sm:w-64">
+        </div>
         <div class="overflow-x-auto">
             <table class="w-full text-left text-sm text-slate-300">
                 <thead class="bg-slate-900 text-xs uppercase font-semibold text-slate-400 border-b border-slate-700">
@@ -343,9 +352,12 @@
 
     <!-- TAB 9: CAT - SALDO ATUAL -->
     <div id="tab-cat-saldo-atual" class="tab-content card rounded-xl p-5 shadow-xl">
-        <h3 class="text-lg font-bold text-slate-200 mb-4 flex items-center gap-2">
-            <i class="fas fa-wallet text-cyan-400"></i> Tabela Dinâmica: Cat — SALDO ATUAL
-        </h3>
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
+            <h3 class="text-lg font-bold text-slate-200 flex items-center gap-2">
+                <i class="fas fa-wallet text-cyan-400"></i> Tabela Dinâmica: Cat — SALDO ATUAL
+            </h3>
+            <input type="text" id="searchCatSaldoAtual" onkeyup="filterPivot('SALDO ATUAL', 'tableSaldoAtual', 'searchCatSaldoAtual')" placeholder="Pesquisar banco/aplicação..." class="bg-slate-900 border border-slate-700 text-slate-200 px-3 py-1.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-cyan-500 w-full sm:w-64">
+        </div>
         <div class="overflow-x-auto">
             <table class="w-full text-left text-sm text-slate-300">
                 <thead class="bg-slate-900 text-xs uppercase font-semibold text-slate-400 border-b border-slate-700">
@@ -804,7 +816,7 @@
             renderLancamentosTable(filtered);
         }
 
-        function renderPivot(catName, targetId) {
+        function renderPivot(catName, targetId, filterQuery = '') {
             const totals = {};
             rawLancamentosData.filter(d => d.cat === catName).forEach(d => {
                 totals[d.sub] = (totals[d.sub] || 0) + Math.abs(d.val);
@@ -813,9 +825,14 @@
             const body = document.getElementById(targetId);
             if (!body) return;
 
-            const entries = Object.entries(totals);
+            let entries = Object.entries(totals);
+            if (filterQuery) {
+                const q = filterQuery.toLowerCase();
+                entries = entries.filter(([sub]) => sub.toLowerCase().includes(q));
+            }
+
             if (entries.length === 0) {
-                body.innerHTML = `<tr><td colspan="2" class="p-4 text-center text-slate-500 italic">Sem registros para esta categoria</td></tr>`;
+                body.innerHTML = `<tr><td colspan="2" class="p-4 text-center text-slate-500 italic">Nenhum registro encontrado</td></tr>`;
                 return;
             }
 
@@ -825,6 +842,11 @@
                     <td class="p-3 text-right font-mono font-bold text-white">${formatBRL(val)}</td>
                 </tr>
             `).join('');
+        }
+
+        function filterPivot(catName, targetId, inputId) {
+            const query = document.getElementById(inputId).value;
+            renderPivot(catName, targetId, query);
         }
 
         window.onload = function() {
