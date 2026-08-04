@@ -4,77 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Financeiro — Condomínio Casablanca Campeche</title>
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js CDN -->
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Font Awesome Icons -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts Inter -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background-color: #0f172a;
-            color: #f8fafc;
-        }
-        .card {
-            background-color: #1e293b;
-            border: 1px solid #334155;
-        }
-        .tab-btn {
-            transition: all 0.2s ease-in-out;
-        }
-        .tab-btn.active {
-            background-color: #059669;
-            color: #ffffff;
-            border-color: #10b981;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
-        }
-        .tab-content {
-            display: none;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        /* Custom scrollbars */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0f172a;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #334155;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #475569;
-        }
+        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background-color: #0f172a; color: #f8fafc; }
+        .card { background-color: #1e293b; border: 1px solid #334155; }
+        .tab-btn.active { background-color: #059669; color: #ffffff; border-color: #10b981; font-weight: 600; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
     </style>
 </head>
 <body class="p-3 sm:p-5 md:p-8 min-h-screen">
 
+    <!-- Cabeçalho Principal -->
     <header class="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-800 pb-5 gap-4">
         <div>
             <div class="flex items-center gap-2 flex-wrap">
                 <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/80 px-3 py-1 rounded-full border border-emerald-800/80 shadow-sm">
                     <i class="fas fa-shield-alt mr-1"></i> Conselho Fiscal
                 </span>
-                <span class="text-xs text-slate-400 bg-slate-800/80 px-3 py-1 rounded-full border border-slate-700">
-                    Histórico Completo (2015 — 2026)
+                <span id="dataStatusBadge" class="text-xs text-sky-400 bg-sky-950/80 px-3 py-1 rounded-full border border-sky-800/80 flex items-center gap-1">
+                    <i class="fas fa-sync-alt fa-spin"></i> Conectando à Planilha Google...
                 </span>
             </div>
             <h1 class="text-2xl sm:text-3xl font-extrabold mt-2 text-white tracking-tight">
                 CONDOMÍNIO EDIFÍCIO RESIDENCIAL CASABLANCA
             </h1>
             <p class="text-slate-400 text-sm mt-1 flex items-center gap-2">
-                <i class="fas fa-location-dot text-emerald-400"></i> Praia do Campeche — Florianópolis/SC | Painel de Auditoria e Prestação de Contas
+                <i class="fas fa-location-dot text-emerald-400"></i> Praia do Campeche — Florianópolis/SC | Painel do Conselheiro Fiscal
             </p>
         </div>
         
@@ -83,7 +52,7 @@
                 <i class="fas fa-print"></i> PDF / Imprimir
             </button>
             <a href="https://docs.google.com/spreadsheets/d/1A25V1E5yVs8ePVvGW8zb25oSS3M8ef65ZAJU-8wpUJk/edit?gid=1395213704#gid=1395213704" target="_blank" rel="noopener noreferrer" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs sm:text-sm font-medium px-3 sm:px-4 py-2 rounded-lg transition flex items-center gap-2 shadow-lg shadow-emerald-900/30">
-                <i class="fas fa-table"></i> Planilha Google Original
+                <i class="fas fa-table"></i> Planilha Google Banco de Dados
             </a>
             <a href="https://drive.google.com/drive/u/1/folders/1kLPlg8nVzIyuRGMOLlgc2c5W9RGXT_ia" target="_blank" rel="noopener noreferrer" class="bg-sky-600 hover:bg-sky-500 text-white text-xs sm:text-sm font-medium px-3 sm:px-4 py-2 rounded-lg transition flex items-center gap-2 shadow-lg shadow-sky-900/30">
                 <i class="fab fa-google-drive"></i> Pasta PDFs
@@ -91,6 +60,7 @@
         </div>
     </header>
 
+    <!-- Abas de Navegação das 8 seções da Planilha -->
     <nav class="flex flex-wrap gap-2 mb-6 border-b border-slate-800 pb-3 overflow-x-auto">
         <button onclick="switchTab('tab-dashboard')" id="btn-tab-dashboard" class="tab-btn active text-xs sm:text-sm px-3.5 py-2.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 flex items-center gap-2">
             <i class="fas fa-chart-pie text-emerald-400"></i> 📊 Dashboard Geral
@@ -121,15 +91,15 @@
         </button>
     </nav>
 
+    <!-- TAB 1: DASHBOARD GERAL -->
     <div id="tab-dashboard" class="tab-content active space-y-6">
-        
-        <!-- Filter Bar -->
+        <!-- Filtros do Dashboard -->
         <div class="card p-5 rounded-xl shadow-xl">
             <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
                 <div class="flex items-center gap-2 text-slate-200 font-semibold text-sm">
-                    <i class="fas fa-filter text-emerald-400"></i> Filtros do Dashboard
+                    <i class="fas fa-filter text-emerald-400"></i> Filtros de Análise Orçamentária
                 </div>
-                <span class="text-xs text-slate-400">Selecione o período para recalcular os gráficos e totais</span>
+                <span class="text-xs text-slate-400">Selecione o período para recalcular os totais e gráficos</span>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                 <div>
@@ -169,7 +139,7 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-slate-400 mb-1">Visão Geral</label>
+                    <label class="block text-xs font-medium text-slate-400 mb-1">Visão de Lançamentos</label>
                     <select id="dashFilterTipo" onchange="updateDashboard()" class="w-full bg-slate-900 border border-slate-700 text-slate-200 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
                         <option value="TODOS">Receitas & Despesas</option>
                         <option value="RECEITAS">Apenas Receitas</option>
@@ -184,6 +154,7 @@
             </div>
         </div>
 
+        <!-- Indicadores KPIs -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div class="card p-5 rounded-xl border-l-4 border-l-emerald-500 shadow-lg">
                 <div class="flex justify-between items-start text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2">
@@ -200,7 +171,7 @@
                     <i class="fas fa-arrow-up text-rose-400 text-base"></i>
                 </div>
                 <div id="kpiDesp" class="text-2xl font-bold text-rose-400 font-mono">R$ 0,00</div>
-                <span class="text-xs text-slate-500 mt-1 block">Manutenção, serviços, honorários</span>
+                <span class="text-xs text-slate-500 mt-1 block">Manutenção, limpeza, elevadores e taxas</span>
             </div>
 
             <div class="card p-5 rounded-xl border-l-4 border-l-sky-500 shadow-lg">
@@ -222,6 +193,7 @@
             </div>
         </div>
 
+        <!-- Gráficos Interativos -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div class="card p-5 rounded-xl shadow-xl">
                 <h3 class="text-base font-bold text-slate-200 mb-4 flex items-center gap-2">
@@ -233,7 +205,7 @@
             </div>
             <div class="card p-5 rounded-xl shadow-xl">
                 <h3 class="text-base font-bold text-slate-200 mb-4 flex items-center gap-2">
-                    <i class="fas fa-pie-chart text-amber-400"></i> Distribuição Orçamentária por Categoria
+                    <i class="fas fa-pie-chart text-amber-400"></i> Distribuição das Despesas por Subcategoria
                 </h3>
                 <div class="relative h-72">
                     <canvas id="chartDespesas"></canvas>
@@ -242,15 +214,16 @@
         </div>
     </div>
 
+    <!-- TAB 2: RESUMO MENSAL -->
     <div id="tab-resumo-mensal" class="tab-content card rounded-xl p-5 shadow-xl">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
             <div>
                 <h3 class="text-lg font-bold text-slate-200 flex items-center gap-2">
                     <i class="fas fa-calendar-alt text-sky-400"></i> Resumo Mensal dos Demonstrativos Processados
                 </h3>
-                <p class="text-slate-400 text-xs mt-0.5">Visão condensada de cada arquivo PDF de prestação de contas mensal</p>
+                <p class="text-slate-400 text-xs mt-0.5">Visão condensada extraída de cada arquivo PDF mensal</p>
             </div>
-            <input type="text" id="searchResumo" onkeyup="filterResumoTable()" placeholder="Buscar competência ou PDF..." class="bg-slate-900 border border-slate-700 text-slate-200 px-3 py-1.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-sky-500 w-full sm:w-64">
+            <input type="text" id="searchResumo" onkeyup="filterResumoTable()" placeholder="Buscar competência ou arquivo..." class="bg-slate-900 border border-slate-700 text-slate-200 px-3 py-1.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-sky-500 w-full sm:w-64">
         </div>
         <div class="overflow-x-auto">
             <table class="w-full text-left text-sm text-slate-300">
@@ -265,24 +238,21 @@
                         <th class="p-3 text-right">Saldo Atual</th>
                     </tr>
                 </thead>
-                <tbody id="tableResumoMensal" class="divide-y divide-slate-800">
-                    <!-- Populated via JS -->
-                </tbody>
+                <tbody id="tableResumoMensal" class="divide-y divide-slate-800"></tbody>
             </table>
         </div>
     </div>
 
+    <!-- TAB 3: LANÇAMENTOS DETALHADOS -->
     <div id="tab-lancamentos" class="tab-content card rounded-xl p-5 shadow-xl">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
             <div>
                 <h3 class="text-lg font-bold text-slate-200 flex items-center gap-2">
                     <i class="fas fa-list-check text-amber-400"></i> Base Completa de Lançamentos Detalhados
                 </h3>
-                <p class="text-slate-400 text-xs mt-0.5">Filtre por qualquer termo, fornecedor, serviço ou valor</p>
+                <p class="text-slate-400 text-xs mt-0.5">Pesquise por qualquer serviço, taxa, fornecedor ou valor</p>
             </div>
-            <div class="flex items-center gap-2 w-full sm:w-auto">
-                <input type="text" id="searchLanc" onkeyup="filterLancamentosTable()" placeholder="Pesquisar conta, taxa, serviço..." class="bg-slate-900 border border-slate-700 text-slate-200 px-3 py-1.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-amber-500 w-full sm:w-72">
-            </div>
+            <input type="text" id="searchLanc" onkeyup="filterLancamentosTable()" placeholder="Pesquisar conta, taxa, serviço..." class="bg-slate-900 border border-slate-700 text-slate-200 px-3 py-1.5 rounded-lg text-sm outline-none focus:ring-2 focus:ring-amber-500 w-full sm:w-72">
         </div>
         <div class="overflow-x-auto">
             <table class="w-full text-left text-sm text-slate-300">
@@ -294,33 +264,30 @@
                         <th class="p-3 text-right">Valor Registrado</th>
                     </tr>
                 </thead>
-                <tbody id="tableLancamentos" class="divide-y divide-slate-800">
-                    <!-- Populated via JS -->
-                </tbody>
+                <tbody id="tableLancamentos" class="divide-y divide-slate-800"></tbody>
             </table>
         </div>
     </div>
 
+    <!-- TAB 4: MESES FALTANTES -->
     <div id="tab-meses-faltantes" class="tab-content card rounded-xl p-5 shadow-xl">
         <h3 class="text-lg font-bold text-slate-200 mb-2 flex items-center gap-2">
             <i class="fas fa-exclamation-triangle text-rose-400"></i> Meses Faltantes (Sem Lançamentos Processados)
         </h3>
-        <p class="text-slate-400 text-sm mb-4">Competências da linha do tempo (2015 — 2026) ainda não digitalizadas ou ausentes no acervo:</p>
-        <div id="gridFaltantes" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
-            <!-- Populated via JS -->
-        </div>
+        <p class="text-slate-400 text-sm mb-4">Competências da linha do tempo (2015 — 2026) pendentes de envio ou digitalização:</p>
+        <div id="gridFaltantes" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3"></div>
     </div>
 
+    <!-- TAB 5: MESES COMPUTADOS -->
     <div id="tab-meses-computados" class="tab-content card rounded-xl p-5 shadow-xl">
         <h3 class="text-lg font-bold text-slate-200 mb-2 flex items-center gap-2">
             <i class="fas fa-check-circle text-emerald-400"></i> Meses Computados e Processados
         </h3>
-        <p class="text-slate-400 text-sm mb-4">Competências cujos balancetes e demonstrativos foram compilados na base de dados:</p>
-        <div id="gridComputados" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
-            <!-- Populated via JS -->
-        </div>
+        <p class="text-slate-400 text-sm mb-4">Competências cujos balancetes já foram totalmente consolidados na base:</p>
+        <div id="gridComputados" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3"></div>
     </div>
 
+    <!-- TAB 6: CAT - SALDO ANTERIOR -->
     <div id="tab-cat-saldo-ant" class="tab-content card rounded-xl p-5 shadow-xl">
         <h3 class="text-lg font-bold text-slate-200 mb-4 flex items-center gap-2">
             <i class="fas fa-history text-indigo-400"></i> Tabela Dinâmica: Cat — SALDO ANTERIOR
@@ -338,6 +305,7 @@
         </div>
     </div>
 
+    <!-- TAB 7: CAT - RECEITAS -->
     <div id="tab-cat-receitas" class="tab-content card rounded-xl p-5 shadow-xl">
         <h3 class="text-lg font-bold text-slate-200 mb-4 flex items-center gap-2">
             <i class="fas fa-arrow-down-left text-emerald-400"></i> Tabela Dinâmica: Cat — RECEITAS
@@ -355,6 +323,7 @@
         </div>
     </div>
 
+    <!-- TAB 8: CAT - DESPESAS -->
     <div id="tab-cat-despesas" class="tab-content card rounded-xl p-5 shadow-xl">
         <h3 class="text-lg font-bold text-slate-200 mb-4 flex items-center gap-2">
             <i class="fas fa-arrow-up-right text-rose-400"></i> Tabela Dinâmica: Cat — DESPESAS
@@ -372,6 +341,7 @@
         </div>
     </div>
 
+    <!-- TAB 9: CAT - SALDO ATUAL -->
     <div id="tab-cat-saldo-atual" class="tab-content card rounded-xl p-5 shadow-xl">
         <h3 class="text-lg font-bold text-slate-200 mb-4 flex items-center gap-2">
             <i class="fas fa-wallet text-cyan-400"></i> Tabela Dinâmica: Cat — SALDO ATUAL
@@ -391,11 +361,12 @@
 
     <footer class="mt-12 text-center text-slate-500 text-xs border-t border-slate-800 pt-6 pb-4">
         <p class="font-semibold text-slate-400">Condomínio Edifício Residencial Casablanca — Campeche, Florianópolis/SC</p>
-        <p class="mt-1">Painel Interativo de Transparência e Gestão Orçamentária do Conselho Fiscal.</p>
+        <p class="mt-1">Painel Interativo de Transparência Orçamentária e Conectividade em Tempo Real com Google Sheets.</p>
     </footer>
 
     <script>
-        const rawResumoData = [
+        // Dados embutidos de segurança (para garantia offline total caso o Google estivesse sem sinal)
+        let rawResumoData = [
             { arq: "C0153_Demonstrativomensal_122016.pdf", comp: "12/2016", per: "01/12/2016 a 31/12/2016", sant: 5231.84, rec: 8057.94, desp: 4972.74, satual: 8287.04 },
             { arq: "C0153_Demonstrativomensal_012016.pdf", comp: "01/2016", per: "01/01/2016 a 31/01/2016", sant: 17035.65, rec: 7213.14, desp: 7523.20, satual: 10752.20 },
             { arq: "C0153_Demonstrativomensal_122015.pdf", comp: "12/2015", per: "01/12/2015 a 31/12/2015", sant: 30022.70, rec: 8212.68, desp: 17035.65, satual: 21199.73 },
@@ -510,7 +481,7 @@
             { arq: "C0153_Demonstrativomensal_042026.pdf", comp: "04/2026", per: "01/04/2026 a 30/04/2026", sant: 18414.22, rec: 40393.72, desp: 21000.00, satual: 40393.72 }
         ];
 
-        const rawLancamentosData = [
+        let rawLancamentosData = [
             { comp: "12/2016", cat: "SALDO ANTERIOR", sub: "Caixa de Condomínio", val: 17.98 },
             { comp: "12/2016", cat: "SALDO ANTERIOR", sub: "Caixa Econômica Federal (C/C)", val: 2294.78 },
             { comp: "12/2016", cat: "SALDO ANTERIOR", sub: "Caixa Econômica Federal - Poupança (4029-0)", val: 83.96 },
@@ -560,6 +531,55 @@
         let chartEvolucaoInstance = null;
         let chartDespesasInstance = null;
 
+        // Tenta buscar dados em tempo real diretamente da Planilha Google publica
+        async function fetchLiveGoogleSheetsData() {
+            const badge = document.getElementById('dataStatusBadge');
+            try {
+                // Endpoint CSV direto do Google Sheets
+                const sheetId = '1A25V1E5yVs8ePVvGW8zb25oSS3M8ef65ZAJU-8wpUJk';
+                const urlResumo = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&gid=0`;
+                
+                const response = await fetch(urlResumo);
+                if (response.ok) {
+                    const text = await response.text();
+                    const parsed = parseCSVResumo(text);
+                    if (parsed && parsed.length > 0) {
+                        rawResumoData = parsed;
+                        badge.innerHTML = '<i class="fas fa-link text-emerald-400"></i> Conectado ao Google Sheets ao vivo';
+                        badge.className = "text-xs text-emerald-400 bg-emerald-950/80 px-3 py-1 rounded-full border border-emerald-800/80 flex items-center gap-1";
+                        updateDashboard();
+                        renderTables();
+                        return;
+                    }
+                }
+            } catch (err) {
+                console.log("Modo de segurança offline ativado (dados internos mantidos).", err);
+            }
+            
+            badge.innerHTML = '<i class="fas fa-database text-amber-400"></i> Base Interna Carregada';
+            badge.className = "text-xs text-amber-400 bg-amber-950/80 px-3 py-1 rounded-full border border-amber-800/80 flex items-center gap-1";
+        }
+
+        function parseCSVResumo(csvText) {
+            const lines = csvText.split('\n');
+            const result = [];
+            for (let i = 1; i < lines.length; i++) {
+                const cols = lines[i].split(',').map(c => c.replace(/"/g, '').trim());
+                if (cols.length >= 7) {
+                    result.push({
+                        arq: cols[0],
+                        comp: cols[1],
+                        per: cols[2],
+                        sant: parseFloat(cols[3].replace(',', '.')) || 0,
+                        rec: parseFloat(cols[4].replace(',', '.')) || 0,
+                        desp: parseFloat(cols[5].replace(',', '.')) || 0,
+                        satual: parseFloat(cols[6].replace(',', '.')) || 0
+                    });
+                }
+            }
+            return result;
+        }
+
         function formatBRL(val) {
             if (val === undefined || val === null || isNaN(val)) return "R$ 0,00";
             return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -607,7 +627,6 @@
             document.getElementById('kpiSaldo').innerText = formatBRL(saldo);
             document.getElementById('kpiRatio').innerText = ratio + "%";
 
-            // Update Saldo Color
             const kpiSaldoEl = document.getElementById('kpiSaldo');
             if (saldo >= 0) {
                 kpiSaldoEl.className = "text-2xl font-bold text-emerald-400 font-mono";
@@ -650,7 +669,7 @@
                 }
             });
 
-            // Aggregate Despesas by Subcategory
+            // Agregação de Despesas por Subcategoria
             const despsMap = {};
             rawLancamentosData.filter(d => d.cat === 'DESPESAS').forEach(d => {
                 despsMap[d.sub] = (despsMap[d.sub] || 0) + Math.abs(d.val);
@@ -689,7 +708,7 @@
             // 2. Lançamentos Detalhados
             renderLancamentosTable(rawLancamentosData);
 
-            // 3. Meses Computados vs Meses Faltantes (2015 to 2026)
+            // 3. Meses Computados vs Meses Faltantes (2015 a 2026)
             const compSet = new Set(rawResumoData.map(r => r.comp));
             
             const gridComp = document.getElementById('gridComputados');
@@ -716,7 +735,7 @@
                 </div>
             `).join('');
 
-            // 4. Dynamic Pivot Tables (Cat - Saldo Ant, Receitas, Despesas, Saldo Atual)
+            // 4. Tabelas Dinâmicas (Cat - Saldo Ant, Receitas, Despesas, Saldo Atual)
             renderPivot('SALDO ANTERIOR', 'tableSaldoAnt');
             renderPivot('RECEITAS', 'tableCatReceitas');
             renderPivot('DESPESAS', 'tableCatDespesas');
@@ -811,7 +830,21 @@
         window.onload = function() {
             updateDashboard();
             renderTables();
+            fetchLiveGoogleSheetsData();
         };
     </script>
 </body>
 </html>
+```
+
+---
+
+### 📋 Próximos Passos Recomendados para o Projeto:
+
+1. **Garantir a Permissão da Planilha Google**:
+   * No Google Sheets, clique no botão azul **"Compartilhar"** (no canto superior direito).
+   * Altere de *Restrito* para **"Qualquer pessoa com o link"** (mantenha como *Leitor* para segurança).
+2. **Atualizar o GitHub**:
+   * Faça o upload deste novo arquivo `index.html` para o repositório `casablanca-dashboard`.
+3. **Gerar um QR Code de Divulgação**:
+   * Cole o link do seu site (`https://juandiegoangelico.github.io/casablanca-dashboard/`) em um gerador gratuito de QR Code (como `qr-code-generator.com`) para colocar no quadro de avisos do condomínio ou nos elevadores.
