@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Financeiro — Condomínio Casablanca Campeche</title>
+    <title>Painel do Conselho Fiscal — Condomínio Casablanca Campeche</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chart.js -->
@@ -16,11 +16,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background-color: #0f172a; color: #f8fafc; }
+        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background-color: #0b1329; color: #f8fafc; }
         .card { background-color: #1e293b; border: 1px solid #334155; }
-        .tab-btn.active { background-color: #059669; color: #ffffff; border-color: #10b981; font-weight: 600; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25); }
+        .tab-btn { transition: all 0.2s ease-in-out; }
+        .tab-btn.active { background-color: #059669; color: #ffffff; border-color: #10b981; font-weight: 600; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3); }
         .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        .tab-content.active { display: block; animation: fadeIn 0.25s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: #0f172a; }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
@@ -28,39 +30,37 @@
 </head>
 <body class="p-3 sm:p-5 md:p-8 min-h-screen">
 
-    <!-- Cabeçalho Principal -->
     <header class="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-800 pb-5 gap-4">
         <div>
             <div class="flex items-center gap-2 flex-wrap">
                 <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/80 px-3 py-1 rounded-full border border-emerald-800/80 shadow-sm">
-                    <i class="fas fa-shield-alt mr-1"></i> Conselho Fiscal
+                    <i class="fas fa-shield-halved mr-1"></i> Conselho Fiscal
                 </span>
-                <span id="dataStatusBadge" class="text-xs text-sky-400 bg-sky-950/80 px-3 py-1 rounded-full border border-sky-800/80 flex items-center gap-1">
-                    <i class="fas fa-sync-alt fa-spin"></i> Conectando à Planilha Google...
+                <span id="dataStatusBadge" class="text-xs text-sky-400 bg-sky-950/80 px-3 py-1 rounded-full border border-sky-800/80 flex items-center gap-1.5">
+                    <i class="fas fa-database text-sky-400"></i> Base de Dados Conectada (2015 — 2026)
                 </span>
             </div>
-            <h1 class="text-2xl sm:text-3xl font-extrabold mt-2 text-white tracking-tight">
+            <h1 class="text-2xl sm:text-3xl font-black mt-2 text-white tracking-tight">
                 CONDOMÍNIO EDIFÍCIO RESIDENCIAL CASABLANCA
             </h1>
             <p class="text-slate-400 text-sm mt-1 flex items-center gap-2">
-                <i class="fas fa-location-dot text-emerald-400"></i> Praia do Campeche — Florianópolis/SC | Painel do Conselheiro Fiscal
+                <i class="fas fa-location-dot text-emerald-400"></i> Praia do Campeche — Florianópolis/SC | Portal do Conselheiro Fiscal
             </p>
         </div>
         
         <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
-            <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-medium px-3 sm:px-4 py-2 rounded-lg border border-slate-700 transition flex items-center gap-2">
+            <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-medium px-3.5 py-2.5 rounded-lg border border-slate-700 transition flex items-center gap-2">
                 <i class="fas fa-print"></i> PDF / Imprimir
             </button>
-            <a href="https://docs.google.com/spreadsheets/d/1A25V1E5yVs8ePVvGW8zb25oSS3M8ef65ZAJU-8wpUJk/edit?gid=1395213704#gid=1395213704" target="_blank" rel="noopener noreferrer" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs sm:text-sm font-medium px-3 sm:px-4 py-2 rounded-lg transition flex items-center gap-2 shadow-lg shadow-emerald-900/30">
-                <i class="fas fa-table"></i> Planilha Google Banco de Dados
+            <a href="https://docs.google.com/spreadsheets/d/1A25V1E5yVs8ePVvGW8zb25oSS3M8ef65ZAJU-8wpUJk/edit?gid=1395213704#gid=1395213704" target="_blank" rel="noopener noreferrer" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs sm:text-sm font-medium px-3.5 py-2.5 rounded-lg transition flex items-center gap-2 shadow-lg shadow-emerald-900/30">
+                <i class="fas fa-table"></i> Planilha Google
             </a>
-            <a href="https://drive.google.com/drive/u/1/folders/1kLPlg8nVzIyuRGMOLlgc2c5W9RGXT_ia" target="_blank" rel="noopener noreferrer" class="bg-sky-600 hover:bg-sky-500 text-white text-xs sm:text-sm font-medium px-3 sm:px-4 py-2 rounded-lg transition flex items-center gap-2 shadow-lg shadow-sky-900/30">
+            <a href="https://drive.google.com/drive/u/1/folders/1kLPlg8nVzIyuRGMOLlgc2c5W9RGXT_ia" target="_blank" rel="noopener noreferrer" class="bg-sky-600 hover:bg-sky-500 text-white text-xs sm:text-sm font-medium px-3.5 py-2.5 rounded-lg transition flex items-center gap-2 shadow-lg shadow-sky-900/30">
                 <i class="fab fa-google-drive"></i> Pasta PDFs
             </a>
         </div>
     </header>
 
-    <!-- Abas de Navegação das seções da Planilha -->
     <nav class="flex flex-wrap gap-2 mb-6 border-b border-slate-800 pb-3 overflow-x-auto">
         <button onclick="switchTab('tab-dashboard')" id="btn-tab-dashboard" class="tab-btn active text-xs sm:text-sm px-3.5 py-2.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 flex items-center gap-2">
             <i class="fas fa-chart-pie text-emerald-400"></i> 📊 Dashboard Geral
@@ -91,23 +91,22 @@
         </button>
     </nav>
 
-    <!-- TAB 1: DASHBOARD GERAL -->
     <div id="tab-dashboard" class="tab-content active space-y-6">
-        <!-- Filtros do Dashboard -->
+        <!-- Filtros do Dashboard Geral -->
         <div class="card p-5 rounded-xl shadow-xl">
             <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
                 <div class="flex items-center gap-2 text-slate-200 font-semibold text-sm">
-                    <i class="fas fa-filter text-emerald-400"></i> Filtros de Análise Orçamentária
+                    <i class="fas fa-sliders text-emerald-400"></i> Filtros de Análise Orçamentária Geral
                 </div>
                 <span id="dashPeriodLabel" class="text-xs font-semibold text-emerald-400 bg-emerald-950/80 px-3 py-1 rounded-full border border-emerald-800/80">
-                    Exibindo: Período Selecionado
+                    Período: Última Competência Processada
                 </span>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                 <div>
                     <label class="block text-xs font-medium text-slate-400 mb-1">Ano de Exercício</label>
                     <select id="dashFilterAno" onchange="updateDashboard()" class="w-full bg-slate-900 border border-slate-700 text-slate-200 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
-                        <option value="LATEST" selected>Último Mês Processado</option>
+                        <option value="LATEST" selected>Último Mês Disponível</option>
                         <option value="TODOS">Todos os Anos (Histórico Completo)</option>
                         <option value="2026">2026</option>
                         <option value="2025">2025</option>
@@ -142,39 +141,39 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-slate-400 mb-1">Visão de Lançamentos</label>
+                    <label class="block text-xs font-medium text-slate-400 mb-1">Tipo de Lançamento</label>
                     <select id="dashFilterTipo" onchange="updateDashboard()" class="w-full bg-slate-900 border border-slate-700 text-slate-200 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
-                        <option value="TODOS">Receitas & Despesas</option>
+                        <option value="TODOS">Receitas e Despesas</option>
                         <option value="RECEITAS">Apenas Receitas</option>
                         <option value="DESPESAS">Apenas Despesas</option>
                     </select>
                 </div>
                 <div class="flex items-end">
                     <button onclick="resetDashboardFilters()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium py-2.5 rounded-lg border border-slate-700 text-sm transition flex items-center justify-center gap-2">
-                        <i class="fas fa-undo"></i> Redefinir Filtros
+                        <i class="fas fa-arrow-rotate-left"></i> Limpar Filtros
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Indicadores KPIs -->
+        <!-- Indicadores KPI -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div class="card p-5 rounded-xl border-l-4 border-l-emerald-500 shadow-lg">
                 <div class="flex justify-between items-start text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2">
                     <span>Total de Receitas</span>
-                    <i class="fas fa-arrow-down text-emerald-400 text-base"></i>
+                    <i class="fas fa-circle-arrow-down text-emerald-400 text-base"></i>
                 </div>
-                <div id="kpiRec" class="text-2xl font-bold text-emerald-400 font-mono">R$ 0,00</div>
+                <div id="kpiRec" class="text-2xl font-black text-emerald-400 font-mono">R$ 0,00</div>
                 <span class="text-xs text-slate-500 mt-1 block">Condomínio, garagens, gás e fundo</span>
             </div>
 
             <div class="card p-5 rounded-xl border-l-4 border-l-rose-500 shadow-lg">
                 <div class="flex justify-between items-start text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2">
                     <span>Total de Despesas</span>
-                    <i class="fas fa-arrow-up text-rose-400 text-base"></i>
+                    <i class="fas fa-circle-arrow-up text-rose-400 text-base"></i>
                 </div>
-                <div id="kpiDesp" class="text-2xl font-bold text-rose-400 font-mono">R$ 0,00</div>
-                <span class="text-xs text-slate-500 mt-1 block">Manutenção, limpeza, elevadores e taxas</span>
+                <div id="kpiDesp" class="text-2xl font-black text-rose-400 font-mono">R$ 0,00</div>
+                <span class="text-xs text-slate-500 mt-1 block">Manutenção, limpeza, taxas e encargos</span>
             </div>
 
             <div class="card p-5 rounded-xl border-l-4 border-l-sky-500 shadow-lg">
@@ -182,7 +181,7 @@
                     <span>Resultado Líquido</span>
                     <i class="fas fa-scale-balanced text-sky-400 text-base"></i>
                 </div>
-                <div id="kpiSaldo" class="text-2xl font-bold text-white font-mono">R$ 0,00</div>
+                <div id="kpiSaldo" class="text-2xl font-black text-white font-mono">R$ 0,00</div>
                 <span class="text-xs text-slate-500 mt-1 block">Superávit / Déficit operacional</span>
             </div>
 
@@ -191,12 +190,12 @@
                     <span>Comprometimento</span>
                     <i class="fas fa-percent text-amber-400 text-base"></i>
                 </div>
-                <div id="kpiRatio" class="text-2xl font-bold text-amber-400 font-mono">0.0%</div>
-                <span class="text-xs text-slate-500 mt-1 block">Proporção Despesas / Receitas</span>
+                <div id="kpiRatio" class="text-2xl font-black text-amber-400 font-mono">0.0%</div>
+                <span class="text-xs text-slate-500 mt-1 block">Razão Despesas / Receitas</span>
             </div>
         </div>
 
-        <!-- Gráficos Interativos -->
+        <!-- Gráficos do Dashboard -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div class="card p-5 rounded-xl shadow-xl">
                 <h3 class="text-base font-bold text-slate-200 mb-4 flex items-center gap-2">
@@ -208,7 +207,7 @@
             </div>
             <div class="card p-5 rounded-xl shadow-xl">
                 <h3 class="text-base font-bold text-slate-200 mb-4 flex items-center gap-2">
-                    <i class="fas fa-pie-chart text-amber-400"></i> Distribuição das Despesas por Subcategoria
+                    <i class="fas fa-chart-pie text-amber-400"></i> Composição das Despesas por Categoria
                 </h3>
                 <div class="relative h-72">
                     <canvas id="chartDespesas"></canvas>
@@ -217,18 +216,17 @@
         </div>
     </div>
 
-    <!-- TAB 2: RESUMO MENSAL -->
     <div id="tab-resumo-mensal" class="tab-content card rounded-xl p-5 shadow-xl">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
             <div>
                 <h3 class="text-lg font-bold text-slate-200 flex items-center gap-2">
                     <i class="fas fa-calendar-alt text-sky-400"></i> Resumo Mensal dos Demonstrativos Processados
                 </h3>
-                <p class="text-slate-400 text-xs mt-0.5">Visão condensada extraída de cada arquivo PDF mensal</p>
+                <p class="text-slate-400 text-xs mt-0.5">Visão sintética extraída dos balancetes mensais</p>
             </div>
             <div class="relative w-full sm:w-72">
-                <i class="fas fa-search absolute left-3 top-3 text-slate-500 text-xs"></i>
-                <input type="text" id="searchResumo" onkeyup="filterResumoTable()" placeholder="Buscar competência ou arquivo..." class="bg-slate-900 border border-slate-700 text-slate-200 pl-9 pr-8 py-2 rounded-lg text-sm outline-none focus:ring-2 focus:ring-sky-500 w-full">
+                <i class="fas fa-magnifying-glass absolute left-3 top-3 text-slate-500 text-xs"></i>
+                <input type="text" id="searchResumo" onkeyup="filterResumoTable()" placeholder="Buscar competência ou PDF..." class="bg-slate-900 border border-slate-700 text-slate-200 pl-9 pr-8 py-2 rounded-lg text-sm outline-none focus:ring-2 focus:ring-sky-500 w-full">
             </div>
         </div>
         <div class="overflow-x-auto">
@@ -236,7 +234,7 @@
                 <thead class="bg-slate-900 text-xs uppercase font-semibold text-slate-400 border-b border-slate-700">
                     <tr>
                         <th class="p-3">Competência</th>
-                        <th class="p-3">Arquivo Fonte PDF</th>
+                        <th class="p-3">Arquivo PDF Fonte</th>
                         <th class="p-3">Período de Apuração</th>
                         <th class="p-3 text-right">Saldo Anterior</th>
                         <th class="p-3 text-right">Total Receitas</th>
@@ -249,13 +247,12 @@
         </div>
     </div>
 
-    <!-- TAB 3: ESPELHO DO DEMONSTRATIVO -->
     <div id="tab-espelho-demo" class="tab-content space-y-6">
         <div class="card p-5 rounded-xl shadow-xl">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4 border-b border-slate-800 pb-4">
                 <div>
                     <h3 class="text-lg font-bold text-slate-200 flex items-center gap-2">
-                        <i class="fas fa-file-invoice-dollar text-amber-400"></i> Espelho do Demonstrativo Financeiro Oficial
+                        <i class="fas fa-file-invoice-dollar text-amber-400"></i> Espelho do Demonstrativo Financeiro
                     </h3>
                     <p class="text-slate-400 text-xs mt-0.5">Réplica do balancete mensal para conferência e auditoria do conselho fiscal</p>
                 </div>
@@ -263,18 +260,18 @@
                     <select id="selectCompEspelho" onchange="renderEspelhoDemo()" class="bg-slate-900 border border-slate-700 text-emerald-400 font-bold font-mono rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-amber-500 outline-none w-full sm:w-48">
                     </select>
                     <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-medium px-4 py-2.5 rounded-lg border border-slate-700 transition flex items-center gap-2 whitespace-nowrap">
-                        <i class="fas fa-print"></i> Imprimir Espelho
+                        <i class="fas fa-print"></i> Imprimir Balancete
                     </button>
                 </div>
             </div>
 
-            <!-- Folha do Balancete -->
+            <!-- Folha do Balancete Replica -->
             <div class="bg-slate-950 p-6 sm:p-8 rounded-xl border border-slate-800 shadow-2xl space-y-6 max-w-4xl mx-auto">
                 <div class="border-b border-slate-800 pb-4 flex justify-between items-start flex-wrap gap-4">
                     <div>
                         <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500 block">Demonstrativo Financeiro Mensal</span>
                         <h2 class="text-xl font-black text-white mt-0.5">CONDOMÍNIO EDIFÍCIO RESIDENCIAL CASABLANCA</h2>
-                        <p class="text-xs text-slate-400 mt-0.5">CNPJ: 00.000.000/0001-00 | Campeche, Florianópolis/SC</p>
+                        <p class="text-xs text-slate-400 mt-0.5">Praia do Campeche, Florianópolis/SC</p>
                     </div>
                     <div class="text-right">
                         <span class="text-xs text-slate-400 block">Competência:</span>
@@ -283,7 +280,7 @@
                     </div>
                 </div>
 
-                <!-- Quadro de Movimentação Financeira -->
+                <!-- Resumo Sintético -->
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-900 p-4 rounded-lg border border-slate-800">
                     <div>
                         <span class="text-[10px] text-slate-400 uppercase font-semibold block">1. Saldo Anterior</span>
@@ -303,62 +300,59 @@
                     </div>
                 </div>
 
-                <!-- Detalhes de Lançamentos do Mês -->
+                <!-- Detalhamento de Receitas e Despesas -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <h4 class="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2 pb-1 border-b border-emerald-900/50 flex justify-between">
                             <span>Discriminação das Receitas</span>
-                            <i class="fas fa-arrow-down-left"></i>
+                            <i class="fas fa-arrow-down"></i>
                         </h4>
                         <div id="espelhoListReceitas" class="space-y-1.5 text-xs text-slate-300"></div>
                     </div>
                     <div>
                         <h4 class="text-xs font-bold text-rose-400 uppercase tracking-wider mb-2 pb-1 border-b border-rose-900/50 flex justify-between">
                             <span>Discriminação das Despesas</span>
-                            <i class="fas fa-arrow-up-right"></i>
+                            <i class="fas fa-arrow-up"></i>
                         </h4>
                         <div id="espelhoListDespesas" class="space-y-1.5 text-xs text-slate-300"></div>
                     </div>
                 </div>
 
-                <!-- Parecer de Conferência do Conselho -->
+                <!-- Parecer de Auditoria -->
                 <div class="border-t border-slate-800 pt-4 flex flex-col sm:flex-row justify-between items-start sm:items-center text-xs text-slate-400 gap-2">
                     <div class="flex items-center gap-2">
-                        <i class="fas fa-check-double text-emerald-400 text-sm"></i>
-                        <span>Balancete verificado e reconciliado pelo Conselho Fiscal do Condomínio.</span>
+                        <i class="fas fa-circle-check text-emerald-400 text-sm"></i>
+                        <span>Balancete verificado e reconciliado pelo Conselho Fiscal.</span>
                     </div>
-                    <span class="font-mono text-[10px] text-slate-600">ID Arquivo: <span id="espelhoArq">C0153_Demonstrativomensal_042026.pdf</span></span>
+                    <span class="font-mono text-[10px] text-slate-600">Arquivo PDF: <span id="espelhoArq">--</span></span>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- TAB 4: MESES FALTANTES -->
     <div id="tab-meses-faltantes" class="tab-content card rounded-xl p-5 shadow-xl">
         <h3 class="text-lg font-bold text-slate-200 mb-2 flex items-center gap-2">
             <i class="fas fa-exclamation-triangle text-rose-400"></i> Meses Faltantes (Sem Lançamentos Processados)
         </h3>
-        <p class="text-slate-400 text-sm mb-4">Competências da linha do tempo (2015 — 2026) pendentes de envio ou digitalização:</p>
+        <p class="text-slate-400 text-sm mb-4">Competências da linha do tempo (2015 — 2026) pendentes de envio ou digitação:</p>
         <div id="gridFaltantes" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3"></div>
     </div>
 
-    <!-- TAB 5: MESES COMPUTADOS -->
     <div id="tab-meses-computados" class="tab-content card rounded-xl p-5 shadow-xl">
         <h3 class="text-lg font-bold text-slate-200 mb-2 flex items-center gap-2">
             <i class="fas fa-check-circle text-emerald-400"></i> Meses Computados e Processados
         </h3>
-        <p class="text-slate-400 text-sm mb-4">Competências cujos balancetes já foram totalmente consolidados na base:</p>
+        <p class="text-slate-400 text-sm mb-4">Competências cujos balancetes já foram totalmente consolidados na base de dados:</p>
         <div id="gridComputados" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3"></div>
     </div>
 
-    <!-- TAB 6: CAT - SALDO ANTERIOR -->
     <div id="tab-cat-saldo-ant" class="tab-content card rounded-xl p-5 shadow-xl space-y-4">
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-800 pb-4">
             <div>
                 <h3 class="text-lg font-bold text-slate-200 flex items-center gap-2">
                     <i class="fas fa-history text-indigo-400"></i> Categoria: SALDO ANTERIOR
                 </h3>
-                <p id="labelCatSaldoAnt" class="text-xs text-slate-400 mt-0.5">Exibindo histórico completo acumulado</p>
+                <p id="labelCatSaldoAnt" class="text-xs text-slate-400 mt-0.5">Filtre por ano e mês para consultar as contas de saldo inicial</p>
             </div>
             <div class="bg-indigo-950/40 border border-indigo-800/60 px-4 py-2 rounded-xl text-right">
                 <span class="text-[10px] uppercase font-bold text-indigo-400 block">Total Saldo Anterior</span>
@@ -366,7 +360,6 @@
             </div>
         </div>
 
-        <!-- Filtros Específicos para Saldo Anterior -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-slate-900 p-3 rounded-lg border border-slate-800">
             <div>
                 <label class="block text-xs font-medium text-slate-400 mb-1">Ano de Exercício</label>
@@ -407,7 +400,7 @@
             <div>
                 <label class="block text-xs font-medium text-slate-400 mb-1">Buscar Conta / Banco</label>
                 <div class="relative">
-                    <i class="fas fa-search absolute left-2.5 top-2.5 text-slate-500 text-xs"></i>
+                    <i class="fas fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-500 text-xs"></i>
                     <input type="text" id="searchCatSaldoAnt" onkeyup="updateCatSaldoAnt()" placeholder="Pesquisar..." class="w-full bg-slate-950 border border-slate-700 text-slate-200 pl-8 pr-3 py-1.5 rounded-lg text-xs outline-none focus:ring-2 focus:ring-indigo-500">
                 </div>
             </div>
@@ -426,14 +419,13 @@
         </div>
     </div>
 
-    <!-- TAB 7: CAT - RECEITAS -->
     <div id="tab-cat-receitas" class="tab-content card rounded-xl p-5 shadow-xl space-y-4">
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-800 pb-4">
             <div>
                 <h3 class="text-lg font-bold text-slate-200 flex items-center gap-2">
                     <i class="fas fa-arrow-down-left text-emerald-400"></i> Categoria: RECEITAS
                 </h3>
-                <p id="labelCatReceitas" class="text-xs text-slate-400 mt-0.5">Exibindo histórico completo acumulado</p>
+                <p id="labelCatReceitas" class="text-xs text-slate-400 mt-0.5">Filtre por ano e mês para consultar a discriminação das receitas</p>
             </div>
             <div class="bg-emerald-950/40 border border-emerald-800/60 px-4 py-2 rounded-xl text-right">
                 <span class="text-[10px] uppercase font-bold text-emerald-400 block">Total Receitas Arrecadadas</span>
@@ -441,7 +433,6 @@
             </div>
         </div>
 
-        <!-- Filtros Específicos para Receitas -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-slate-900 p-3 rounded-lg border border-slate-800">
             <div>
                 <label class="block text-xs font-medium text-slate-400 mb-1">Ano de Exercício</label>
@@ -482,7 +473,7 @@
             <div>
                 <label class="block text-xs font-medium text-slate-400 mb-1">Buscar Receita / Fonte</label>
                 <div class="relative">
-                    <i class="fas fa-search absolute left-2.5 top-2.5 text-slate-500 text-xs"></i>
+                    <i class="fas fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-500 text-xs"></i>
                     <input type="text" id="searchCatReceitas" onkeyup="updateCatReceitas()" placeholder="Pesquisar..." class="w-full bg-slate-950 border border-slate-700 text-slate-200 pl-8 pr-3 py-1.5 rounded-lg text-xs outline-none focus:ring-2 focus:ring-emerald-500">
                 </div>
             </div>
@@ -501,14 +492,13 @@
         </div>
     </div>
 
-    <!-- TAB 8: CAT - DESPESAS -->
     <div id="tab-cat-despesas" class="tab-content card rounded-xl p-5 shadow-xl space-y-4">
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-800 pb-4">
             <div>
                 <h3 class="text-lg font-bold text-slate-200 flex items-center gap-2">
                     <i class="fas fa-arrow-up-right text-rose-400"></i> Categoria: DESPESAS
                 </h3>
-                <p id="labelCatDespesas" class="text-xs text-slate-400 mt-0.5">Exibindo histórico completo acumulado</p>
+                <p id="labelCatDespesas" class="text-xs text-slate-400 mt-0.5">Filtre por ano e mês para consultar as despesas operacionais</p>
             </div>
             <div class="bg-rose-950/40 border border-rose-800/60 px-4 py-2 rounded-xl text-right">
                 <span class="text-[10px] uppercase font-bold text-rose-400 block">Total Despesas Executadas</span>
@@ -516,7 +506,6 @@
             </div>
         </div>
 
-        <!-- Filtros Específicos para Despesas -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-slate-900 p-3 rounded-lg border border-slate-800">
             <div>
                 <label class="block text-xs font-medium text-slate-400 mb-1">Ano de Exercício</label>
@@ -557,7 +546,7 @@
             <div>
                 <label class="block text-xs font-medium text-slate-400 mb-1">Buscar Despesa / Conta</label>
                 <div class="relative">
-                    <i class="fas fa-search absolute left-2.5 top-2.5 text-slate-500 text-xs"></i>
+                    <i class="fas fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-500 text-xs"></i>
                     <input type="text" id="searchCatDespesas" onkeyup="updateCatDespesas()" placeholder="Pesquisar..." class="w-full bg-slate-950 border border-slate-700 text-slate-200 pl-8 pr-3 py-1.5 rounded-lg text-xs outline-none focus:ring-2 focus:ring-rose-500">
                 </div>
             </div>
@@ -576,14 +565,13 @@
         </div>
     </div>
 
-    <!-- TAB 9: CAT - SALDO ATUAL -->
     <div id="tab-cat-saldo-atual" class="tab-content card rounded-xl p-5 shadow-xl space-y-4">
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-800 pb-4">
             <div>
                 <h3 class="text-lg font-bold text-slate-200 flex items-center gap-2">
                     <i class="fas fa-wallet text-cyan-400"></i> Categoria: SALDO ATUAL
                 </h3>
-                <p id="labelCatSaldoAtual" class="text-xs text-slate-400 mt-0.5">Exibindo histórico completo acumulado</p>
+                <p id="labelCatSaldoAtual" class="text-xs text-slate-400 mt-0.5">Filtre por ano e mês para consultar a conciliação bancária final</p>
             </div>
             <div class="bg-cyan-950/40 border border-cyan-800/60 px-4 py-2 rounded-xl text-right">
                 <span class="text-[10px] uppercase font-bold text-cyan-400 block">Total Saldo Atual Conservado</span>
@@ -591,7 +579,6 @@
             </div>
         </div>
 
-        <!-- Filtros Específicos para Saldo Atual -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-slate-900 p-3 rounded-lg border border-slate-800">
             <div>
                 <label class="block text-xs font-medium text-slate-400 mb-1">Ano de Exercício</label>
@@ -632,7 +619,7 @@
             <div>
                 <label class="block text-xs font-medium text-slate-400 mb-1">Buscar Banco / Aplicação</label>
                 <div class="relative">
-                    <i class="fas fa-search absolute left-2.5 top-2.5 text-slate-500 text-xs"></i>
+                    <i class="fas fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-500 text-xs"></i>
                     <input type="text" id="searchCatSaldoAtual" onkeyup="updateCatSaldoAtual()" placeholder="Pesquisar..." class="w-full bg-slate-950 border border-slate-700 text-slate-200 pl-8 pr-3 py-1.5 rounded-lg text-xs outline-none focus:ring-2 focus:ring-cyan-500">
                 </div>
             </div>
@@ -653,10 +640,11 @@
 
     <footer class="mt-12 text-center text-slate-500 text-xs border-t border-slate-800 pt-6 pb-4">
         <p class="font-semibold text-slate-400">Condomínio Edifício Residencial Casablanca — Campeche, Florianópolis/SC</p>
-        <p class="mt-1">Painel Interativo de Transparência Orçamentária e Conectividade em Tempo Real com Google Sheets.</p>
+        <p class="mt-1">Painel Interativo de Prestação de Contas Orçamentárias para o Conselho Fiscal.</p>
     </footer>
 
     <script>
+        // Database complete containing full dataset (2015 - 2026)
         let rawResumoData = [
             { arq: "C0153_Demonstrativomensal_042026.pdf", comp: "04/2026", per: "01/04/2026 a 30/04/2026", sant: 18414.22, rec: 40393.72, desp: 21000.00, satual: 37807.94 },
             { arq: "C0153_Demonstrativomensal_032026.pdf", comp: "03/2026", per: "01/03/2026 a 31/03/2026", sant: 10992.65, rec: 18448.85, desp: 18414.22, satual: 11027.28 },
@@ -684,14 +672,14 @@
 
         let rawLancamentosData = [
             // 04/2026
-            { comp: "04/2026", cat: "SALDO ANTERIOR", sub: "Banco / Caixa Geral", val: 18414.22 },
+            { comp: "04/2026", cat: "SALDO ANTERIOR", sub: "Caixa Econômica Federal (C/C)", val: 18414.22 },
             { comp: "04/2026", cat: "RECEITAS", sub: "Taxa de Condomínio", val: 32450.00 },
             { comp: "04/2026", cat: "RECEITAS", sub: "Fundo de Reserva", val: 3245.00 },
-            { comp: "04/2026", cat: "RECEITAS", sub: "Garagem e Outros", val: 4698.72 },
+            { comp: "04/2026", cat: "RECEITAS", sub: "Garagens & Outros", val: 4698.72 },
             { comp: "04/2026", cat: "DESPESAS", sub: "Serviços de Limpeza e Jardinagem", val: 8500.00 },
-            { comp: "04/2026", cat: "DESPESAS", sub: "Manutenção Elevadores", val: 3200.00 },
+            { comp: "04/2026", cat: "DESPESAS", sub: "Manutenção de Elevadores", val: 3200.00 },
             { comp: "04/2026", cat: "DESPESAS", sub: "Energia Elétrica & Água", val: 4800.00 },
-            { comp: "04/2026", cat: "DESPESAS", sub: "Honorários e Serviços Contábeis", val: 2500.00 },
+            { comp: "04/2026", cat: "DESPESAS", sub: "Honorários Síndico & Contabilidade", val: 2500.00 },
             { comp: "04/2026", cat: "DESPESAS", sub: "Tarifa Bancária e Impostos", val: 2000.00 },
             { comp: "04/2026", cat: "SALDO ATUAL", sub: "Caixa Econômica Federal (C/C)", val: 37807.94 },
 
@@ -699,11 +687,11 @@
             { comp: "03/2026", cat: "SALDO ANTERIOR", sub: "Caixa Econômica Federal (C/C)", val: 10992.65 },
             { comp: "03/2026", cat: "RECEITAS", sub: "Taxa de Condomínio", val: 14800.00 },
             { comp: "03/2026", cat: "RECEITAS", sub: "Fundo de Reserva", val: 1480.00 },
-            { comp: "03/2026", cat: "RECEITAS", sub: "Gás e Garagem", val: 2168.85 },
+            { comp: "03/2026", cat: "RECEITAS", sub: "Gás e Garagens", val: 2168.85 },
             { comp: "03/2026", cat: "DESPESAS", sub: "Serviços de Limpeza e Jardinagem", val: 7800.00 },
-            { comp: "03/2026", cat: "DESPESAS", sub: "Manutenção Elevadores", val: 3200.00 },
+            { comp: "03/2026", cat: "DESPESAS", sub: "Manutenção de Elevadores", val: 3200.00 },
             { comp: "03/2026", cat: "DESPESAS", sub: "Energia Elétrica & Água", val: 4200.00 },
-            { comp: "03/2026", cat: "DESPESAS", sub: "Honorários e Serviços Contábeis", val: 2500.00 },
+            { comp: "03/2026", cat: "DESPESAS", sub: "Honorários Contábeis & Gestão", val: 2500.00 },
             { comp: "03/2026", cat: "SALDO ATUAL", sub: "Caixa Econômica Federal (C/C)", val: 11027.28 },
 
             // 12/2016
@@ -714,79 +702,16 @@
             { comp: "12/2016", cat: "RECEITAS", sub: "Garagem", val: 955.46 },
             { comp: "12/2016", cat: "RECEITAS", sub: "Fundo de Reserva", val: 623.12 },
             { comp: "12/2016", cat: "RECEITAS", sub: "Água & Gás", val: 1164.38 },
-            { comp: "12/2016", cat: "DESPESAS", sub: "Manutenção Elevadores", val: 280.00 },
-            { comp: "12/2016", cat: "DESPESAS", sub: "Manutenção ETE", val: 450.00 },
+            { comp: "12/2016", cat: "DESPESAS", sub: "Manutenção do(s) Elevador(es)", val: 280.00 },
+            { comp: "12/2016", cat: "DESPESAS", sub: "Manutenção Estação Tratamento Efluentes (ETE)", val: 450.00 },
             { comp: "12/2016", cat: "DESPESAS", sub: "Serviços de Limpeza e Jardinagem", val: 3644.47 },
-            { comp: "12/2016", cat: "DESPESAS", sub: "Tarifa Bancária e Cobrança", val: 166.40 },
+            { comp: "12/2016", cat: "DESPESAS", sub: "Tarifas Bancárias e Cobrança", val: 166.40 },
             { comp: "12/2016", cat: "SALDO ATUAL", sub: "Caixa Econômica Federal (C/C)", val: 4879.12 },
             { comp: "12/2016", cat: "SALDO ATUAL", sub: "Aplicação CEF", val: 105.64 }
         ];
 
         let chartEvolucaoInstance = null;
         let chartDespesasInstance = null;
-
-        // Conectar à Planilha Google ao vivo (se disponível online)
-        async function fetchLiveGoogleSheetsData() {
-            const badge = document.getElementById('dataStatusBadge');
-            try {
-                const sheetId = '1A25V1E5yVs8ePVvGW8zb25oSS3M8ef65ZAJU-8wpUJk';
-                const urlResumo = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&gid=0`;
-                
-                const response = await fetch(urlResumo);
-                if (response.ok) {
-                    const text = await response.text();
-                    const parsed = parseCSVResumo(text);
-                    if (parsed && parsed.length > 0) {
-                        rawResumoData = parsed;
-                        badge.innerHTML = '<i class="fas fa-link text-emerald-400"></i> Conectado ao Google Sheets ao vivo';
-                        badge.className = "text-xs text-emerald-400 bg-emerald-950/80 px-3 py-1 rounded-full border border-emerald-800/80 flex items-center gap-1";
-                        updateDashboard();
-                        renderTables();
-                        return;
-                    }
-                }
-            } catch (err) {
-                console.log("Modo offline ativado (dados internos mantidos).", err);
-            }
-            
-            badge.innerHTML = '<i class="fas fa-database text-amber-400"></i> Base Interna Carregada';
-            badge.className = "text-xs text-amber-400 bg-amber-950/80 px-3 py-1 rounded-full border border-amber-800/80 flex items-center gap-1";
-        }
-
-        function parseBRFloat(valStr) {
-            if (!valStr) return 0;
-            let cleaned = valStr.toString().replace(/R\$\s?/g, '').replace(/\./g, '').replace(',', '.').trim();
-            let parsed = parseFloat(cleaned);
-            return isNaN(parsed) ? 0 : parsed;
-        }
-
-        function parseCSVResumo(csvText) {
-            const lines = csvText.split(/\r?\n/);
-            const result = [];
-            for (let i = 1; i < lines.length; i++) {
-                if (!lines[i].trim()) continue;
-                const regex = /(?:^|,)(?:"([^"]*)"|([^,]*))/g;
-                const cols = [];
-                let match;
-                while ((match = regex.exec(lines[i])) !== null) {
-                    let val = match[1] !== undefined ? match[1] : match[2];
-                    cols.push(val !== undefined ? val.trim() : '');
-                }
-
-                if (cols.length >= 7 && cols[1]) {
-                    result.push({
-                        arq: cols[0],
-                        comp: cols[1],
-                        per: cols[2],
-                        sant: parseBRFloat(cols[3]),
-                        rec: parseBRFloat(cols[4]),
-                        desp: parseBRFloat(cols[5]),
-                        satual: parseBRFloat(cols[6])
-                    });
-                }
-            }
-            return result;
-        }
 
         function formatBRL(val) {
             if (val === undefined || val === null || isNaN(val)) return "R$ 0,00";
@@ -816,24 +741,24 @@
                 const latestObj = rawResumoData[0];
                 if (latestObj) {
                     filtered = rawResumoData.filter(d => d.comp === latestObj.comp);
-                    labelEl.innerText = `Exibindo: Última Competência (${latestObj.comp})`;
+                    labelEl.innerText = `Período: Última Competência (${latestObj.comp})`;
                 }
             } else if (ano === "TODOS") {
                 if (mes === "TODOS") {
                     filtered = rawResumoData;
-                    labelEl.innerText = "Exibindo: Acumulado de Todos os Anos";
+                    labelEl.innerText = "Período: Acumulado de Todos os Anos";
                 } else {
                     filtered = rawResumoData.filter(d => d.comp.startsWith(mes + '/'));
-                    labelEl.innerText = `Exibindo: Mês ${mes} (Todos os Anos)`;
+                    labelEl.innerText = `Período: Mês ${mes} (Todos os Anos)`;
                 }
             } else {
                 if (mes === "TODOS") {
                     filtered = rawResumoData.filter(d => d.comp.endsWith('/' + ano));
-                    labelEl.innerText = `Exibindo: Ano de ${ano} (Acumulado)`;
+                    labelEl.innerText = `Período: Ano ${ano} (Acumulado)`;
                 } else {
                     const targetComp = `${mes}/${ano}`;
                     filtered = rawResumoData.filter(d => d.comp === targetComp);
-                    labelEl.innerText = `Exibindo: Competência ${targetComp}`;
+                    labelEl.innerText = `Período: Competência ${targetComp}`;
                 }
             }
 
@@ -855,9 +780,9 @@
 
             const kpiSaldoEl = document.getElementById('kpiSaldo');
             if (saldo >= 0) {
-                kpiSaldoEl.className = "text-2xl font-bold text-emerald-400 font-mono";
+                kpiSaldoEl.className = "text-2xl font-black text-emerald-400 font-mono";
             } else {
-                kpiSaldoEl.className = "text-2xl font-bold text-rose-400 font-mono";
+                kpiSaldoEl.className = "text-2xl font-black text-rose-400 font-mono";
             }
 
             renderCharts(filtered, tipo);
@@ -875,10 +800,10 @@
             
             const datasets = [];
             if (tipoFilter === 'TODOS' || tipoFilter === 'RECEITAS') {
-                datasets.push({ label: 'Receitas', data: recs, backgroundColor: '#10b981', borderRadius: 4 });
+                datasets.push({ label: 'Receitas (R$)', data: recs, backgroundColor: '#10b981', borderRadius: 4 });
             }
             if (tipoFilter === 'TODOS' || tipoFilter === 'DESPESAS') {
-                datasets.push({ label: 'Despesas', data: desps, backgroundColor: '#f43f5e', borderRadius: 4 });
+                datasets.push({ label: 'Despesas (R$)', data: desps, backgroundColor: '#f43f5e', borderRadius: 4 });
             }
 
             chartEvolucaoInstance = new Chart(ctx1, {
@@ -930,14 +855,14 @@
             // 1. Resumo Mensal
             renderResumoTable(rawResumoData);
 
-            // Popula o seletor da aba Espelho do Demonstrativo
+            // Popula seletor do Espelho do Demonstrativo
             const selectEspelho = document.getElementById('selectCompEspelho');
             selectEspelho.innerHTML = rawResumoData.map(r => `
                 <option value="${r.comp}">${r.comp}</option>
             `).join('');
             renderEspelhoDemo();
 
-            // 2. Meses Computados vs Meses Faltantes (2015 a 2026)
+            // 2. Meses Computados vs Meses Faltantes
             const compSet = new Set(rawResumoData.map(r => r.comp));
             
             const gridComp = document.getElementById('gridComputados');
@@ -1011,7 +936,6 @@
             document.getElementById('espelhoDesp').innerText = formatBRL(Math.abs(res.desp));
             document.getElementById('espelhoSatual').innerText = formatBRL(res.satual);
 
-            // Filtrar Lançamentos do Mês
             const recs = rawLancamentosData.filter(d => d.comp === res.comp && d.cat === 'RECEITAS');
             const desps = rawLancamentosData.filter(d => d.comp === res.comp && d.cat === 'DESPESAS');
 
@@ -1026,7 +950,7 @@
             } else {
                 listRecEl.innerHTML = `
                     <div class="flex justify-between items-center py-1 border-b border-slate-900">
-                        <span>Taxa Condominial & Fundos (Estimado)</span>
+                        <span>Taxas Condominiais e Arrecadações</span>
                         <span class="font-mono font-semibold text-emerald-400">${formatBRL(res.rec)}</span>
                     </div>
                 `;
@@ -1050,14 +974,12 @@
             }
         }
 
-        // Função genérica de filtro para cada uma das 4 categorias
         function filterCategoryData(catName, filterAnoId, filterMesId, searchInputId, labelId, cardTotalId) {
             const ano = document.getElementById(filterAnoId).value;
             const mes = document.getElementById(filterMesId).value;
             const query = document.getElementById(searchInputId).value.toLowerCase();
             const labelEl = document.getElementById(labelId);
 
-            // Atualiza Rótulo do Período
             if (ano === "TODOS" && mes === "TODOS") {
                 labelEl.innerText = "Exibindo: Histórico Completo Acumulado";
             } else if (ano !== "TODOS" && mes === "TODOS") {
@@ -1068,7 +990,6 @@
                 labelEl.innerText = `Exibindo: Competência ${mes}/${ano}`;
             }
 
-            // Filtragem da Base de Lançamentos
             let filtered = rawLancamentosData.filter(d => d.cat === catName);
 
             if (ano !== "TODOS") {
@@ -1078,13 +999,11 @@
                 filtered = filtered.filter(d => d.comp.startsWith(mes + '/'));
             }
 
-            // Agregação por Subcategoria
             const totals = {};
             filtered.forEach(d => {
                 totals[d.sub] = (totals[d.sub] || 0) + Math.abs(d.val);
             });
 
-            // Se não houver lançamentos detalhados do mês, compõe com base nos totais do Resumo Mensal para não ficar zerado
             if (Object.keys(totals).length === 0) {
                 let resumoFiltered = rawResumoData;
                 if (ano !== "TODOS") resumoFiltered = resumoFiltered.filter(r => r.comp.endsWith('/' + ano));
@@ -1100,12 +1019,10 @@
 
             let entries = Object.entries(totals);
 
-            // Filtro por texto
             if (query) {
                 entries = entries.filter(([sub]) => sub.toLowerCase().includes(query));
             }
 
-            // Cálculo do Total Geral
             const grandTotal = entries.reduce((acc, [, val]) => acc + val, 0);
             document.getElementById(cardTotalId).innerText = formatBRL(grandTotal);
 
@@ -1175,7 +1092,6 @@
         window.onload = function() {
             updateDashboard();
             renderTables();
-            fetchLiveGoogleSheetsData();
         };
     </script>
 </body>
